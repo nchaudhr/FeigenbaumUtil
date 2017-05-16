@@ -1,12 +1,11 @@
 # FeigenbaumUtil.jl
 
-Documentation for FeigenbaumUtil.jl
+Documentation for FeigenbaumUtil.jl. The documentation is split into three
+parts: [FeigenbaumCore](@ref), [FeigenbaumParam](@ref), [FeigenbaumUtilGraphics](@ref), and
+[FeigenbaumSecondMinimal](@ref). The function descriptions should be sufficient for
+documentation.
 
-## Index
-```@index
-```
-
-## Functions
+## FeigenbaumCore
 ```@docs
 selectmap
 iterateF
@@ -19,13 +18,25 @@ findDistanceReg
 findBoundsUnivX
 hasperiodn
 hasclosedcycle
+```
+
+## FeigenbaumParam
+```@docs
 findparams
 getperioddblparams
 writeparam2tex
+```
+
+## FeigenbaumUtilGraphics
+```@docs
 findg1
 plotRectangle
 plotperioddblmech
 plotbifurcationdiagram
+```
+
+## FeigenbaumSecondMinimal
+```@docs
 getsecminfromfile
 checkperminvolution
 getadjacencymatrixfromlistsp
@@ -37,4 +48,8 @@ unpacksecminperm
 getsecminperms
 generatePermRelations
 gettopologicalstructure
+```
+
+## Index
+```@index
 ```
