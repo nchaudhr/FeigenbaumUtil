@@ -1,9 +1,12 @@
 """
+    findparams(fun, maxloc, k, p0, pEnd, epsi, numTrial, limit)
+
 Finds parameter values that generate superstable orbits of given period
 
-* Usage
-- ```f,fc,maxloc= selectmap("Log")```
-- findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
+# Examples
+- ```julia
+>julia f,fc,maxloc= selectmap("Log"); findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
+```
 """
 function findparams{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int, limit::Int = Inf32)
   lams = zeros(T1,0)
@@ -94,6 +97,8 @@ function writeparam2tex(fn, goBeyond3::Bool = true, outFile="ParamTables.tex", p
 end
 
 """
+    getperioddblparams(period, appr, func)
+
 Extracts parameter values for period doubling scheme for main parameter store
 """
 function getperioddblparams(period,appr,func)

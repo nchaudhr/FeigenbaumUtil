@@ -1,3 +1,14 @@
+"""
+    selectmap(func)
+
+Returns function, centered function, maxloc for unimodal maps
+Log, Sine, Cubic, and Quartic
+
+# Examples
+```julia
+f,fc,maxloc = selectmap("Log")
+```
+"""
 function selectmap(func)
     maxloc = 0.5
     if func == "Log"
@@ -20,16 +31,32 @@ function selectmap(func)
     f, fc, maxloc
 end
 
+"""
+    hasperiodn(perm, n)
+
+Return true if permutation perm has subgraph of period n
+
+# Example
+```julia
+julia> hasperiodn([4 5 7 6 3 2 1], 5)
+True
+```
+"""
 function hasperiodn(perm, n)
   return (sum(diag(getadjacencymatrix(perm)^n))-1) ≠ 0
 end
 
-function phasperiodn(perm, n)
-    if (sum(diag(getadjacencymatrix(perm)^n))-1) ≠ 0
-        return perm
-    end
-end
+"""
+    hasclosedcycle(perm, cycle)
 
+Return true if permutation perm contains disjoint permutation of order cycle
+
+# Example
+```julia
+julia> hasclosedcycle([3 5 4 6 7 1 2], 3)
+True
+```
+"""
 function hasclosedcycle(perm, cycle)
     if (sum(perm .== 1:length(perm)) > 0)
         return true
@@ -60,6 +87,11 @@ function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T
     lst
 end # function iterateF
 
+"""
+    nestF(f,ites,lam,x)
+
+Return ``f^{ites}(x; lam)``
+"""
 function nestF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5)
     y = x
     for n in 1:ites
@@ -67,14 +99,22 @@ function nestF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 =
     end
 
     y
-end # function iterateF
+end # function nestF
 
+"""
+    nestF(f,ites,k,lam,x)
 
+Return ``f^{(2^ites)*k}(x; lam)`` as a list
+"""
 function nestF(f, ites, k, lam, x)
    iterateF(f, k*(2^ites), lam, x)
 end #function nestF
 
+"""
+    iterateF!(f,ites,lam,x)
 
+Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``, in place
+"""
 function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
   # look to making this recursive
     lams = ones(T1, length(x), 1)*lam
@@ -86,6 +126,11 @@ function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::Abstra
     x
 end # function iterateF!
 
+"""
+    iterateF!(f,ites,lam,x)
+
+Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``
+"""
 function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
   # look to making this recursive
     lams = ones(T1, length(x), 1)*lam
@@ -97,12 +142,27 @@ function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::Abstrac
     y
 end # function iterateF
 
+"""
+    nestF(f,ites,k,lam,x)
+
+Return ``f^{(2^ites)*k}(x; lam)`` as a list, in place
+"""
 function nestF!(f, ites, k, lam, x)
    iterateF!(f, k*2^ites, lam, x)
  end #function nestF!
 
-"""Given a map and parameter value corresponding to a cycle of period 'period'
-this function returns the associated cyclic permutation"""
+"""
+    getCyclicPermFromLambda(f,period,lam,x0)
+
+Given a map and parameter value corresponding to a cycle of period 'period'
+returns the associated cyclic permutation
+
+# Example
+```julia
+julia> f,fc,maxloc = selectmap("Log"); getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
+[2 3 1]
+```
+"""
 function getCyclicPermFromLambda{T1<:Real,T2<:Real}(f::Function, period::Int, lam::T1 = 0.5, x0::T2 = 0.5)
     # Any difference between this and sortperm(iterateF(...))? Result is the same for 3 orbit, but that is a special case.
     perm = circshift(iterateF(f, period, lam, x0),1)
@@ -123,6 +183,12 @@ function getCyclicPermFromLambda{T1<:Real,T2<:Real}(f::Function, period::Int, la
     cyc
 end # function getCyclicPermFromLambda
 
+"""
+    findinverse(perm)
+
+Return inverse permutation of perm. That is, if ``π = [n n-1 n-2 … 2 1]``,
+`findinverse` returns ``π(perm(π))``
+"""
 function findinverse(perm::Vector{Int})
     # look to reverse and reverseind
     indices = collect(length(perm):-1:1)
@@ -207,22 +273,31 @@ function GetDistinctFCs(cycles)
     discyc
 end # function GetDistinctFCs
 
-function findDistanceReg{T1<:Real,T2<:Real}(fun::Function, maxloc::T2, l::T1, ites::Int, k::Int)
-  nestF(fun, ites, k, l, maxloc)[end] - maxloc
+"""
+    findDistanceReg(fun, maxloc, l, ites, k)
+
+Returns distance between superstable fixed point, maxloc, and the closest element
+of periodic orbit of function fun with period ``(2^{ites})*k`` at parameter
+``lam``
+"""
+function findDistanceReg{T1<:Real,T2<:Real}(fun::Function, maxloc::T2, lam::T1, ites::Int, k::Int)
+  nestF(fun, ites, k, lam, maxloc)[end] - maxloc
 end # function findDistanceReg
 
 """
+    findBoundsUnivX(f, maxloc, lambda, k, ites)
+
 Calculate the bottom left and right x coords of a bounding box containing
 a stable 2-cycle and the portions of "f" that generate it thereby demonstrating
-the period doubling mechanism for f te
+the period doubling mechanism for f
 """
-function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lambda::T1, k::Int, ites=0)
+function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lam::T1, k::Int, ites=0)
   pnts::Int = 1000
   hpts::Int = pnts / 2
   x = linspace(0, 1, pnts)
 
-  y = iterateF(f, k, lambda, x)
-  d = findDistanceReg(f, maxloc, lambda, ites, k)
+  y = iterateF(f, k, lam, x)
+  d = findDistanceReg(f, maxloc, lam, ites, k)
   por::Int = round(abs(d)*pnts)
 
   if (d < 0)

@@ -1,4 +1,6 @@
 """
+    getsecminfromfile(period)
+
 Load second minimal periodic orbits from file Limited to periodic orbits: 7,9,11,13
 """
 function getsecminfromfile(period::Int)
@@ -7,6 +9,8 @@ function getsecminfromfile(period::Int)
 end
 
 """
+    checkperminvolution(p1,p2,flag)
+
 Check if 2 permutations have a involutory relationship, that is, if Tp1 = p2 and p1 = Tp2
 """
 function checkperminvolution(p1,p2,flag=true)
@@ -21,16 +25,31 @@ function checkperminvolution(p1,p2,flag=true)
   return T
 end
 
+"""
+    getadjacencymatrixfromlistsp(adjlist)
+
+Return sparse adjacency matrix corresponding to adjacency list adjlist
+"""
 function getadjacencymatrixfromlistsp(adjlist)
   # could probably do much better than this
   sd = [[adjlist[i][1] for i in 1:length(adjlist)] [adjlist[i][2] for i in 1:length(adjlist)]]
   return sparse(sd[:,2], sd[:,1], ones(Int,size(sd,1)))
 end
 
+"""
+    getadjacencymatrixsp(perm)
+
+Return sparse adjacency matrix corresponding to permutation perm
+"""
 function getadjacencymatrixsp(perm)
   return getadjacencymatrixfromlistsp(getadjacencylist(perm))
 end
 
+"""
+    getadjacencymatrixfromlist(adjlist)
+
+Return adjacency matrix corresponding to adjacency list adjlist
+"""
 function getadjacencymatrixfromlist(adjlist)
   cols = adjlist[end][1]
   adjmat = zeros(Int,cols,cols)
@@ -42,10 +61,20 @@ function getadjacencymatrixfromlist(adjlist)
   return adjmat
 end
 
+"""
+    getadjacencymatrix(perm)
+
+Return adjacency matrix corresponding to permutation perm
+"""
 function getadjacencymatrix(perm)
   return getadjacencymatrixfromlist(getadjacencylist(perm))
 end
 
+"""
+    getadjacencylist(perm)
+
+Return adjacency matrix corresponding to permutation perm
+"""
 function getadjacencylist(perm)
   raw = [sort(perm[m:m+1]) for m in 1:length(perm)-1]
   return [(s,d) for s in 1:length(raw) for d in raw[s][1]:raw[s][2]-1]
@@ -71,6 +100,8 @@ end
 SecMinPerm(t,b,gs,gsp,k::Int,jhat,jtil) = SecMinPerm(t(k),b(k),gs(k),gsp(k),2*k+1, jhat,jtil)
 
 """
+    unpacksecminperm(permtype)
+
 Expands SecondMinimal into full permutations
 """
 function unpacksecminperm(permtype::SecMinPerm)
@@ -90,6 +121,8 @@ function unpacksecminperm(permtype::SecMinPerm)
 end
 
 """
+    unpacksecminperm(permtype)
+
 Worker function to unpack SecondMinimal permutations into an Array
 """
 function unpacksecminperm(permtype::Array{SecMinPerm,1})
@@ -97,6 +130,8 @@ function unpacksecminperm(permtype::Array{SecMinPerm,1})
 end
 
 """
+    getsecminperms(period)
+
 Generate all SecondMinimal permutations of the given odd period
 """
 function getsecminperms(period::Int)
@@ -261,6 +296,8 @@ function getsecminperms(period::Int)
 end
 
 """
+    generatePermRelations(k, includeInverses)
+
 Mainly written to explore the relations between SecondMinimal permutations
 """
 function generatePermRelations(k, includeInverses = false)
@@ -318,6 +355,8 @@ function generatePermRelations(k, includeInverses = false)
 end
 
 """
+    gettopologicalstructure(perm)
+
 Topological structure of a continuous endomorphism from an interval [a,b] to itself
 is defined as the collection of minimums and maximums taken function on the open
 interval (a,b)

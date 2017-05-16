@@ -1,6 +1,8 @@
 using Plots, Images, ImageView,StatsBase
 
 """
+    findg1(period, appr, func, maxParams)
+
 Demonstrate Feigenbaum period doubling by scaling and reflecting the given
 function at parameter values corresponding to period doublings starting at
 the given period
@@ -66,6 +68,8 @@ function findg1(period, appr, func, maxParams=4)
 end #function findg1
 
 """
+    plotRectangle(x,y,h,w,p,col)
+
 Plots a rectangle with given bottom left corner and height h, width w in plot p
 """
 function plotRectangle(x,y,h,w,p, col=:black)
@@ -76,6 +80,8 @@ function plotRectangle(x,y,h,w,p, col=:black)
 end
 
 """
+    plotperioddblmech(period,appr,func, param, pltpts)
+
 Plot the period doubling mechanism observeed by Feigenbaum with extension
 to more general classes
 """
@@ -104,6 +110,8 @@ function plotperioddblmech(period,appr,func, param, pltpts=1000)
 end
 
 """
+    plotbifurcationdiagram(mp, stlam, enlam, shadest, x0, maxites, showpic)
+
 Plot bifurcation diagram for given map, with parameter start and end ranges and
 starting point x_0
 """
