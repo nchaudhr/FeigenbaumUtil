@@ -38,8 +38,7 @@ Return true if permutation perm has subgraph of period n
 
 # Example
 ```julia
-julia> hasperiodn([4 5 7 6 3 2 1], 5)
-True
+ hasperiodn([4 5 7 6 3 2 1], 5)
 ```
 """
 function hasperiodn(perm, n)
@@ -53,8 +52,7 @@ Return true if permutation perm contains disjoint permutation of order cycle
 
 # Example
 ```julia
-julia> hasclosedcycle([3 5 4 6 7 1 2], 3)
-True
+hasclosedcycle([3 5 4 6 7 1 2], 3)
 ```
 """
 function hasclosedcycle(perm, cycle)
@@ -75,6 +73,8 @@ function hasclosedcycle(perm, cycle)
 end
 
 """
+    iterateF(f,ites,lam,x)
+
 Produce a list of [f(x0, lam), f(f(x0, lam), lam), ...] with up to `ites` compositions.
 """
 function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5)
@@ -85,6 +85,38 @@ function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T
     end
 
     lst
+end # function iterateF
+
+"""
+    iterateF!(f,ites,lam,x)
+
+Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``, in place
+"""
+function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
+  # look to making this recursive
+    lams = ones(T1, length(x), 1)*lam
+
+    for n in 1:ites
+      x = map(f, x, lams)
+    end
+
+    x
+end # function iterateF!
+
+"""
+    iterateF(f,ites,lam,x)
+
+Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``
+"""
+function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
+  # look to making this recursive
+    lams = ones(T1, length(x), 1)*lam
+    y=x
+    for n in 1:ites
+      y = map(f, y, lams)
+    end
+
+    y
 end # function iterateF
 
 """
@@ -111,39 +143,7 @@ function nestF(f, ites, k, lam, x)
 end #function nestF
 
 """
-    iterateF!(f,ites,lam,x)
-
-Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``, in place
-"""
-function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
-  # look to making this recursive
-    lams = ones(T1, length(x), 1)*lam
-
-    for n in 1:ites
-      x = map(f, x, lams)
-    end
-
-    x
-end # function iterateF!
-
-"""
-    iterateF!(f,ites,lam,x)
-
-Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``
-"""
-function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
-  # look to making this recursive
-    lams = ones(T1, length(x), 1)*lam
-    y=x
-    for n in 1:ites
-      y = map(f, y, lams)
-    end
-
-    y
-end # function iterateF
-
-"""
-    nestF(f,ites,k,lam,x)
+    nestF!(f,ites,k,lam,x)
 
 Return ``f^{(2^ites)*k}(x; lam)`` as a list, in place
 """
@@ -159,7 +159,8 @@ returns the associated cyclic permutation
 
 # Example
 ```julia
-julia> f,fc,maxloc = selectmap("Log"); getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
+julia> f,fc,maxloc = selectmap("Log");
+julia> getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 [2 3 1]
 ```
 """

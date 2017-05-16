@@ -113,7 +113,7 @@ end
     plotbifurcationdiagram(mp, stlam, enlam, shadest, x0, maxites, showpic)
 
 Plot bifurcation diagram for given map, with parameter start and end ranges and
-starting point x_0
+starting point ``x_0``
 """
 function plotbifurcationdiagram(mp::String, stlam, enlam, shadest, x0=0.25, maxites=50000, showpic=false)
   f,fc,maxloc = selectmap(mp)

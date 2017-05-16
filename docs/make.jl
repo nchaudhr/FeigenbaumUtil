@@ -2,12 +2,16 @@ using Documenter
 using FeigenbaumUtil
 
 makedocs(
-    modules = [FeigenbaumUtil]
+    modules = [FeigenbaumUtil], doctest = false
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
-# =deploydocs(
-#      repo = "https://github.com/nchaudhr/FeigenbaumUtil"
-#  )=#
+deploydocs(
+    deps = Deps.pip("pygments", "mkdocs", "python-markdown-math"),
+    repo = "github.com/nchaudhr/FeigenbaumUtil",
+    julia  = "0.5",
+    osname = "linux"
+    # ...
+)

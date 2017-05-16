@@ -4,8 +4,9 @@
 Finds parameter values that generate superstable orbits of given period
 
 # Examples
-- ```julia
->julia f,fc,maxloc= selectmap("Log"); findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
+```julia
+julia> f,fc,maxloc= selectmap("Log");
+julia> findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 ```
 """
 function findparams{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int, limit::Int = Inf32)
@@ -62,6 +63,11 @@ function findparaminterval{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int
   end
 end # function findparaminterval
 
+"""
+    writeparam2tex(fn, goBeyond3, outFile, paramFile)
+
+Write values from param tables to TeX file
+"""
 function writeparam2tex(fn, goBeyond3::Bool = true, outFile="ParamTables.tex", paramFile = "allParams.param")
   if (fn ∉ ["Log" "Sin" "Cub" "Qua"])
     throw("Expecting One of Log, Sin, Cub, or Qua!")
