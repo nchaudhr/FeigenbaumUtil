@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/nchaudhr/FeigenbaumUtil.svg?branch=master)](https://travis-ci.org/nchaudhr/FeigenbaumUtil)
 [![Build status](https://ci.appveyor.com/api/projects/status/66ik49he6kxwt3c0?svg=true)](https://ci.appveyor.com/project/nchaudhr/feigenbaumutil)
+[![codecov](https://codecov.io/gh/nchaudhr/FeigenbaumUtil/branch/master/graph/badge.svg)](https://codecov.io/gh/nchaudhr/FeigenbaumUtil)
 
 # FeigenbaumUtil.jl
 
