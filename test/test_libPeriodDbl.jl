@@ -1,5 +1,3 @@
-include(joinpath("..","src","libPeriodDbl.jl"))
-using .libPeriodDbl
 include("expect_libPeriodDbl.jl")
 
 @testset "test_libPeriodDbl" begin
