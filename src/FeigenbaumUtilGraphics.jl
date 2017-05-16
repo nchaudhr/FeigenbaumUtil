@@ -3,7 +3,7 @@ using Plots, Images, ImageView,StatsBase
 """
 Demonstrate Feigenbaum period doubling by scaling and reflecting the given
 function at parameter values corresponding to period doublings starting at
-the given period 
+the given period
 """
 function findg1(period, appr, func, maxParams=4)
   pgfplots()
@@ -105,7 +105,7 @@ end
 
 """
 Plot bifurcation diagram for given map, with parameter start and end ranges and
-starting point $$x_0$$
+starting point x_0
 """
 function plotbifurcationdiagram(mp::String, stlam, enlam, shadest, x0=0.25, maxites=50000, showpic=false)
   f,fc,maxloc = selectmap(mp)
