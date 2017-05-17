@@ -2,3 +2,6 @@
 *.pdf
 *.bat
 *.ps1
+*.tex
+*.mat
+*.dat
