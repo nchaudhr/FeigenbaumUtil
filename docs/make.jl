@@ -10,7 +10,7 @@ makedocs(
 # for more information.
 deploydocs(
     deps = Deps.pip("pygments", "mkdocs", "python-markdown-math"),
-    repo = "github.com/nchaudhr/FeigenbaumUtil",
+    repo = "github.com/nchaudhr/FeigenbaumUtil.git",
     julia  = "0.5",
     osname = "linux"
     # ...
