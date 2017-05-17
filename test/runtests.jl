@@ -1,5 +1,4 @@
-using Base.Test
 using FeigenbaumUtil
+using Base.Test
 
-# @test 1 == 1
-true
+@test 1 == 1
