@@ -120,45 +120,45 @@
 <pre><code class="julia">f,fc,maxloc = selectmap(&quot;Log&quot;)
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L1-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L1-L11' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.iterateF' href='#FeigenbaumUtil.iterateF'>#</a>
 <strong><code>FeigenbaumUtil.iterateF</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>iterateF(f,ites,lam,x)
 </code></pre>
 
 <p>Produce a list of [f(x0, lam), f(f(x0, lam), lam), ...] with up to <code>ites</code> compositions.</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L75-L79' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L75-L79' class='documenter-source'>source</a><br></p>
 <pre><code>iterateF(f,ites,lam,x)
 </code></pre>
 
 <p>Return list $f^{ites}(x; lam)$ where $x = [x_1 x_2 ... x_n]$</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L106-L110' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L106-L110' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.iterateF!' href='#FeigenbaumUtil.iterateF!'>#</a>
 <strong><code>FeigenbaumUtil.iterateF!</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>iterateF!(f,ites,lam,x)
 </code></pre>
 
 <p>Return list $f^{ites}(x; lam)$ where $x = [x_1 x_2 ... x_n]$, in place</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L90-L94' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L90-L94' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.nestF' href='#FeigenbaumUtil.nestF'>#</a>
 <strong><code>FeigenbaumUtil.nestF</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>nestF(f,ites,lam,x)
 </code></pre>
 
 <p>Return $f^{ites}(x; lam)$</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L122-L126' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L122-L126' class='documenter-source'>source</a><br></p>
 <pre><code>nestF(f,ites,k,lam,x)
 </code></pre>
 
 <p>Return $f^{(2^ites)*k}(x; lam)$ as a list</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L136-L140' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L136-L140' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.nestF!' href='#FeigenbaumUtil.nestF!'>#</a>
 <strong><code>FeigenbaumUtil.nestF!</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>nestF!(f,ites,k,lam,x)
 </code></pre>
 
 <p>Return $f^{(2^ites)*k}(x; lam)$ as a list, in place</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L145-L149' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L145-L149' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getCyclicPermFromLambda' href='#FeigenbaumUtil.getCyclicPermFromLambda'>#</a>
 <strong><code>FeigenbaumUtil.getCyclicPermFromLambda</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getCyclicPermFromLambda(f,period,lam,x0)
@@ -171,28 +171,28 @@ julia&gt; getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 [2 3 1]
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L154-L166' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L154-L166' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.findinverse' href='#FeigenbaumUtil.findinverse'>#</a>
 <strong><code>FeigenbaumUtil.findinverse</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>findinverse(perm)
 </code></pre>
 
 <p>Return inverse permutation of perm. That is, if $π = [n n-1 n-2 … 2 1]$, <code>findinverse</code> returns $π(perm(π))$</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L187-L192' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L187-L192' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.findDistanceReg' href='#FeigenbaumUtil.findDistanceReg'>#</a>
 <strong><code>FeigenbaumUtil.findDistanceReg</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>findDistanceReg(fun, maxloc, l, ites, k)
 </code></pre>
 
 <p>Returns distance between superstable fixed point, maxloc, and the closest element of periodic orbit of function fun with period $(2^{ites})*k$ at parameter $lam$</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L277-L283' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L277-L283' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.findBoundsUnivX' href='#FeigenbaumUtil.findBoundsUnivX'>#</a>
 <strong><code>FeigenbaumUtil.findBoundsUnivX</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>findBoundsUnivX(f, maxloc, lambda, k, ites)
 </code></pre>
 
 <p>Calculate the bottom left and right x coords of a bounding box containing a stable 2-cycle and the portions of "f" that generate it thereby demonstrating the period doubling mechanism for f</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L288-L294' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L288-L294' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.hasperiodn' href='#FeigenbaumUtil.hasperiodn'>#</a>
 <strong><code>FeigenbaumUtil.hasperiodn</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>hasperiodn(perm, n)
@@ -203,7 +203,7 @@ julia&gt; getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 <pre><code class="julia"> hasperiodn([4 5 7 6 3 2 1], 5)
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L34-L43' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L34-L43' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.hasclosedcycle' href='#FeigenbaumUtil.hasclosedcycle'>#</a>
 <strong><code>FeigenbaumUtil.hasclosedcycle</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>hasclosedcycle(perm, cycle)
@@ -214,7 +214,7 @@ julia&gt; getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 <pre><code class="julia">hasclosedcycle([3 5 4 6 7 1 2], 3)
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumCore.jl#L48-L57' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumCore.jl#L48-L57' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumParam-1'></a></p>
 <h2 id="feigenbaumparam">FeigenbaumParam</h2>
 <p><a id='FeigenbaumUtil.findparams' href='#FeigenbaumUtil.findparams'>#</a>
@@ -228,21 +228,21 @@ julia&gt; getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 julia&gt; findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 </code></pre>
 
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumParams.jl#L1-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumParams.jl#L1-L11' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getperioddblparams' href='#FeigenbaumUtil.getperioddblparams'>#</a>
 <strong><code>FeigenbaumUtil.getperioddblparams</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getperioddblparams(period, appr, func)
 </code></pre>
 
 <p>Extracts parameter values for period doubling scheme for main parameter store</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumParams.jl#L105-L109' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumParams.jl#L105-L109' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.writeparam2tex' href='#FeigenbaumUtil.writeparam2tex'>#</a>
 <strong><code>FeigenbaumUtil.writeparam2tex</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>writeparam2tex(fn, goBeyond3, outFile, paramFile)
 </code></pre>
 
 <p>Write values from param tables to TeX file</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumParams.jl#L66-L70' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumParams.jl#L66-L70' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtilGraphics-1'></a></p>
 <h2 id="feigenbaumutilgraphics">FeigenbaumUtilGraphics</h2>
 <p><a id='FeigenbaumUtil.findg1' href='#FeigenbaumUtil.findg1'>#</a>
@@ -251,28 +251,28 @@ julia&gt; findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 </code></pre>
 
 <p>Demonstrate Feigenbaum period doubling by scaling and reflecting the given function at parameter values corresponding to period doublings starting at the given period</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumUtilGraphics.jl#L3-L9' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumUtilGraphics.jl#L3-L9' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.plotRectangle' href='#FeigenbaumUtil.plotRectangle'>#</a>
 <strong><code>FeigenbaumUtil.plotRectangle</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>plotRectangle(x,y,h,w,p,col)
 </code></pre>
 
 <p>Plots a rectangle with given bottom left corner and height h, width w in plot p</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumUtilGraphics.jl#L70-L74' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumUtilGraphics.jl#L70-L74' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.plotperioddblmech' href='#FeigenbaumUtil.plotperioddblmech'>#</a>
 <strong><code>FeigenbaumUtil.plotperioddblmech</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>plotperioddblmech(period,appr,func, param, pltpts)
 </code></pre>
 
 <p>Plot the period doubling mechanism observeed by Feigenbaum with extension to more general classes</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumUtilGraphics.jl#L82-L87' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumUtilGraphics.jl#L82-L87' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.plotbifurcationdiagram' href='#FeigenbaumUtil.plotbifurcationdiagram'>#</a>
 <strong><code>FeigenbaumUtil.plotbifurcationdiagram</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>plotbifurcationdiagram(mp, stlam, enlam, shadest, x0, maxites, showpic)
 </code></pre>
 
 <p>Plot bifurcation diagram for given map, with parameter start and end ranges and starting point $x_0$</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumUtilGraphics.jl#L112-L117' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumUtilGraphics.jl#L112-L117' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumSecondMinimal-1'></a></p>
 <h2 id="feigenbaumsecondminimal">FeigenbaumSecondMinimal</h2>
 <p><a id='FeigenbaumUtil.getsecminfromfile' href='#FeigenbaumUtil.getsecminfromfile'>#</a>
@@ -281,82 +281,82 @@ julia&gt; findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 </code></pre>
 
 <p>Load second minimal periodic orbits from file Limited to periodic orbits: 7,9,11,13</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L1-L5' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.checkperminvolution' href='#FeigenbaumUtil.checkperminvolution'>#</a>
 <strong><code>FeigenbaumUtil.checkperminvolution</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>checkperminvolution(p1,p2,flag)
 </code></pre>
 
 <p>Check if 2 permutations have a involutory relationship, that is, if Tp1 = p2 and p1 = Tp2</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L11-L15' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L11-L15' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getadjacencymatrixfromlistsp' href='#FeigenbaumUtil.getadjacencymatrixfromlistsp'>#</a>
 <strong><code>FeigenbaumUtil.getadjacencymatrixfromlistsp</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getadjacencymatrixfromlistsp(adjlist)
 </code></pre>
 
 <p>Return sparse adjacency matrix corresponding to adjacency list adjlist</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L28-L32' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L28-L32' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getadjacencymatrixfromlist' href='#FeigenbaumUtil.getadjacencymatrixfromlist'>#</a>
 <strong><code>FeigenbaumUtil.getadjacencymatrixfromlist</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getadjacencymatrixfromlist(adjlist)
 </code></pre>
 
 <p>Return adjacency matrix corresponding to adjacency list adjlist</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L48-L52' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L48-L52' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getadjacencymatrixsp' href='#FeigenbaumUtil.getadjacencymatrixsp'>#</a>
 <strong><code>FeigenbaumUtil.getadjacencymatrixsp</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getadjacencymatrixsp(perm)
 </code></pre>
 
 <p>Return sparse adjacency matrix corresponding to permutation perm</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L39-L43' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L39-L43' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getadjacencylist' href='#FeigenbaumUtil.getadjacencylist'>#</a>
 <strong><code>FeigenbaumUtil.getadjacencylist</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getadjacencylist(perm)
 </code></pre>
 
 <p>Return adjacency matrix corresponding to permutation perm</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L73-L77' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L73-L77' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getadjacencymatrix' href='#FeigenbaumUtil.getadjacencymatrix'>#</a>
 <strong><code>FeigenbaumUtil.getadjacencymatrix</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getadjacencymatrix(perm)
 </code></pre>
 
 <p>Return adjacency matrix corresponding to permutation perm</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L64-L68' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L64-L68' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.unpacksecminperm' href='#FeigenbaumUtil.unpacksecminperm'>#</a>
 <strong><code>FeigenbaumUtil.unpacksecminperm</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>unpacksecminperm(permtype)
 </code></pre>
 
 <p>Expands SecondMinimal into full permutations</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L102-L106' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L102-L106' class='documenter-source'>source</a><br></p>
 <pre><code>unpacksecminperm(permtype)
 </code></pre>
 
 <p>Worker function to unpack SecondMinimal permutations into an Array</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L123-L127' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L123-L127' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.getsecminperms' href='#FeigenbaumUtil.getsecminperms'>#</a>
 <strong><code>FeigenbaumUtil.getsecminperms</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>getsecminperms(period)
 </code></pre>
 
 <p>Generate all SecondMinimal permutations of the given odd period</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L132-L136' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L132-L136' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.generatePermRelations' href='#FeigenbaumUtil.generatePermRelations'>#</a>
 <strong><code>FeigenbaumUtil.generatePermRelations</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>generatePermRelations(k, includeInverses)
 </code></pre>
 
 <p>Mainly written to explore the relations between SecondMinimal permutations</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L298-L302' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L298-L302' class='documenter-source'>source</a><br></p>
 <p><a id='FeigenbaumUtil.gettopologicalstructure' href='#FeigenbaumUtil.gettopologicalstructure'>#</a>
 <strong><code>FeigenbaumUtil.gettopologicalstructure</code></strong> &mdash; <em>Function</em>.</p>
 <pre><code>gettopologicalstructure(perm)
 </code></pre>
 
 <p>Topological structure of a continuous endomorphism from an interval [a,b] to itself is defined as the collection of minimums and maximums taken function on the open interval (a,b)</p>
-<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/1972db09adcb32f4f00a6bad32dda97a83f9b25f/src/FeigenbaumSecondMinimal.jl#L357-L363' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/nchaudhr/FeigenbaumUtil/tree/f70344f7d0ecbe34287675eca8749f81f0bb8291/src/FeigenbaumSecondMinimal.jl#L357-L363' class='documenter-source'>source</a><br></p>
 <p><a id='Index-1'></a></p>
 <h2 id="index">Index</h2>
 <ul>
@@ -429,5 +429,5 @@ julia&gt; findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-18 17:37:13
+Build Date UTC : 2017-05-18 20:43:31
 -->
