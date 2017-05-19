@@ -2,9 +2,13 @@
 language: julia
 os:
   - linux
+  - osx
 julia:
   - release
   - 0.5
+matrix:
+  allow_failures:
+    - os: osx # allow OS X to fail until build can be fixed.
 notifications:
   email: false
 # uncomment the following lines to override the default test script
