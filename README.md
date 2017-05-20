@@ -7,7 +7,7 @@
 # FeigenbaumUtil.jl
 
 Documentation for FeigenbaumUtil.jl. The documentation is split into three
-parts: [FeigenbaumCore](@ref), [FeigenbaumParam](@ref), [FeigenbaumUtilGraphics](@ref), and
+parts: [FeigenbaumCore](@ref), [FeigenbaumParam](@ref), and
 [FeigenbaumSecondMinimal](@ref). The function descriptions should be sufficient for
 documentation.
 
@@ -33,14 +33,6 @@ getperioddblparams
 writeparam2tex
 ```
 
-## FeigenbaumUtilGraphics
-```@docs
-findg1
-plotRectangle
-plotperioddblmech
-plotbifurcationdiagram
-```
-
 ## FeigenbaumSecondMinimal
 ```@docs
 getsecminfromfile
@@ -55,3 +47,6 @@ getsecminperms
 generatePermRelations
 gettopologicalstructure
 ```
+
+Some examples using FeigenbaumUtil to produce graphics related to universality are implemented in `src/GraphicsExamples.jl`; these routines are only tested on the Travis CI Linux platform, since most of
+their dependencies are only tested on that platform as well.
