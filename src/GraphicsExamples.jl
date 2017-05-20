@@ -1,4 +1,4 @@
-using Plots, Images, ImageView,StatsBase
+using Plots, Images, ImageView, StatsBase, FeigenbaumUtil
 
 """
     findg1(period, appr, func, maxParams)

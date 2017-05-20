@@ -1,6 +1,2 @@
 julia 0.5-
 Compat
-Plots
-Images
-StatsBase
-ImageView

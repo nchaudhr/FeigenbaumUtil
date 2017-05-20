@@ -1,4 +1,4 @@
-# __precompile__()
+(VERSION >= v"0.4.0-dev+6521") && __precompile__()
 module FeigenbaumUtil
 
 using Compat
@@ -23,12 +23,6 @@ export
     getperioddblparams,
     writeparam2tex,
     # End Params --------------------------
-    # Graphics ----------------------------
-    findg1,
-    plotRectangle,
-    plotperioddblmech,
-    plotbifurcationdiagram,
-    # End Graphics ------------------------
     # SecondMinimal -----------------------
     getsecminfromfile,
     checkperminvolution,
@@ -47,7 +41,6 @@ export
 #------ Dependencies / Extensions ----------------------------------------------
 include(joinpath(dirname(@__FILE__),"FeigenbaumCore.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumParams.jl"))
-include(joinpath(dirname(@__FILE__),"FeigenbaumUtilGraphics.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumSecondMinimal.jl"))
 #-------------------------------------------------------------------------------
 
