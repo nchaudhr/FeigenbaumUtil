@@ -15,7 +15,9 @@ end # function getCyclicPermFromLambdaTest
 
 function findinverseTest()
     perm = [3,2,1,4]
-    println(findinverse(perm))
-    @assert findinverse(findinverse(perm)) == perm
+    findinverse(findinverse(perm)) == perm
 end # function findinverseTest
-# findinverseTest()
+
+@testset "Util" begin
+    @test findinverseTest()
+end
