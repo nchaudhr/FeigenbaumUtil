@@ -1,4 +1,7 @@
 using FeigenbaumUtil
 using Base.Test
 
-@test 1 == 1
+@testset begin
+    include("test_libPeriodDbl.jl")
+    include("test_libUtil.jl")
+end
