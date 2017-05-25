@@ -7,10 +7,10 @@ end # function iterateFTest
 # iterateFTest()
 
 function getCyclicPermFromLambdaTest()
-    log = getCyclicPermFromLambda(selectmap("Log")[1], 3, 0.9579685138208287))
-    cub = getCyclicPermFromLambda(selectmap("Cub")[1], 3, 0.9442200243879396, selectmap("Cub")[3]))
-    sin = getCyclicPermFromLambda(selectmap("Sin")[1], 3, 0.9390431418415567))
-    qua = getCyclicPermFromLambda(selectmap("Qua")[1], 3, 0.989481291780039))
+    log = getCyclicPermFromLambda(selectmap("Log")[1], 3, 0.9579685138208287)
+    cub = getCyclicPermFromLambda(selectmap("Cub")[1], 3, 0.9442200243879396, selectmap("Cub")[3])
+    sin = getCyclicPermFromLambda(selectmap("Sin")[1], 3, 0.9390431418415567)
+    qua = getCyclicPermFromLambda(selectmap("Qua")[1], 3, 0.989481291780039)
 
     return log == cub == sin == qua == [2,3,1]
 end # function getCyclicPermFromLambdaTest
