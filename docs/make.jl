@@ -2,7 +2,7 @@ using Documenter
 using FeigenbaumUtil
 
 makedocs(
-    modules = [FeigenbaumUtil], doctest = false
+    modules = [FeigenbaumUtil], doctest = true
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
