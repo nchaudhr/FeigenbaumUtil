@@ -6,7 +6,7 @@ Log, Sine, Cubic, and Quartic
 
 # Examples
 ```jldoctest
-julia> using FeigenbaumUtil; f,fc,maxloc = selectmap("Log")
+julia> f,fc,maxloc = selectmap("Log")
 (FeigenbaumUtil.#1,FeigenbaumUtil.#2,0.5)
 ```
 """
@@ -39,7 +39,7 @@ Return true if permutation perm has subgraph of period n
 
 # Example
 ```jldoctest
-julia> using FeigenbaumUtil; hasperiodn([4, 5, 7, 6, 3, 2, 1], 5)
+julia> hasperiodn([4, 5, 7, 6, 3, 2, 1], 5)
 true
 ```
 """
@@ -54,7 +54,7 @@ Return true if permutation perm contains disjoint permutation of order cycle
 
 # Example
 ```jldoctest
-julia> using FeigenbaumUtil; hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)
+julia> hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)
 true
 ```
 """
@@ -78,7 +78,7 @@ end
 """
     iterateF(f,ites,lam,x)
 
-Produce a list of [f(x0, lam), f(f(x0, lam), lam), ...] with up to `ites` compositions.
+Produce a list of ``[f(x0, lam), f(f(x0, lam), lam), ...]`` with up to `ites` compositions.
 """
 function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5)
     lst = Array{promote_type(T1,T2)}(ites)
@@ -139,7 +139,7 @@ end # function nestF
 """
     nestF(f,ites,k,lam,x)
 
-Return ``f^{(2^ites)*k}(x; lam)`` as a list
+Return ``f^{2^{ites}*k}(x; lam)`` as a list
 """
 function nestF(f, ites, k, lam, x)
    iterateF(f, k*(2^ites), lam, x)
@@ -162,7 +162,7 @@ returns the associated cyclic permutation
 
 # Example
 ```jldoctest
-julia> using FeigenbaumUtil; f,fc,maxloc = selectmap("Log");
+julia> f,fc,maxloc = selectmap("Log");
 
 julia> getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 3-element Array{Int64,1}:
@@ -196,8 +196,8 @@ end # function getCyclicPermFromLambda
 """
     findinverse(perm)
 
-Return inverse permutation of perm. That is, if ``π = [n n-1 n-2 … 2 1]``,
-`findinverse` returns ``π(perm(π))``
+Return inverse permutation of cyclic perm. That is, if ``π = [n n-1 n-2 … 2 1]``,
+returns ``π(perm(π))``
 """
 function findinverse(perm::Vector{Int})
     # look to reverse and reverseind
@@ -298,7 +298,7 @@ end # function findDistanceReg
     findBoundsUnivX(f, maxloc, lambda, k, ites)
 
 Calculate the bottom left and right x coords of a bounding box containing
-a stable 2-cycle and the portions of "f" that generate it thereby demonstrating
+a stable 2-cycle and the portions of `f` that generate it thereby demonstrating
 the period doubling mechanism for f
 """
 function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lam::T1, k::Int, ites=0)
@@ -339,12 +339,12 @@ end # function findBoundsUnivX
 """
     makepermfromtranspositions(trans::Array{Tuple{Int, Int},1}, l::Int)
 
-Given array of transpositions, [(a,b), (c,d), ...] return full permutation
-of length l associated with this
+Given array of transpositions, ``[(a,b), (c,d), ...]`` return full permutation
+of length `l` associated with this
 
 # Example
 ```jldoctest
-julia> using FeigenbaumUtil; makepermfromtranspositions([(1,5), (2,3)], 7)
+julia> makepermfromtranspositions([(1,5), (2,3)], 7)
 7-element Array{Int64,1}:
  5
  3
@@ -375,7 +375,7 @@ Given permutation return transpositions contained within if they exist
 
 # Example
 ```jldoctest
-julia> using FeigenbaumUtil; maketranspositionsfromperm([5,3,2,4,1,6,7])
+julia> maketranspositionsfromperm([5,3,2,4,1,6,7])
 2-element Array{Tuple{Int64,Int64},1}:
  (1,5)
  (2,3)
