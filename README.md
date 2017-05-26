@@ -9,7 +9,7 @@
 Documentation for FeigenbaumUtil.jl. The documentation is split into three
 parts: [FeigenbaumCore](@ref), [FeigenbaumParam](@ref), and
 [FeigenbaumSecondMinimal](@ref). The function descriptions should be sufficient for
-documentation. Full docs available [here](https://nchaudhr.github.io/FeigenbaumUtil/latest/)
+documentation. Full docs available [here](https://nchaudhr.github.io/FeigenbaumUtil/latest/).
 
 ## Usage
 

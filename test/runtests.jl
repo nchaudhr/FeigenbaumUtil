@@ -2,6 +2,6 @@ using FeigenbaumUtil
 using Base.Test
 
 @testset begin
-    include("test_libPeriodDbl.jl")
-    include("test_libUtil.jl")
+    include("test_libCore.jl") # test FeigenbaumCore
+    include("test_libSecondMinimal.jl") # test FeigenbaumSecondMinimal
 end
