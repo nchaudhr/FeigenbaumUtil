@@ -5,8 +5,9 @@ Returns function, centered function, maxloc for unimodal maps
 Log, Sine, Cubic, and Quartic
 
 # Examples
-```julia
-f,fc,maxloc = selectmap("Log")
+```jldoctest
+julia> using FeigenbaumUtil; f,fc,maxloc = selectmap("Log")
+(FeigenbaumUtil.#1,FeigenbaumUtil.#2,0.5)
 ```
 """
 function selectmap(func)
@@ -37,9 +38,9 @@ end
 Return true if permutation perm has subgraph of period n
 
 # Example
-```julia
- julia> hasperiodn([4, 5, 7, 6, 3, 2, 1], 5)
- false
+```jldoctest
+julia> using FeigenbaumUtil; hasperiodn([4, 5, 7, 6, 3, 2, 1], 5)
+true
 ```
 """
 function hasperiodn(perm, n)
@@ -52,8 +53,8 @@ end
 Return true if permutation perm contains disjoint permutation of order cycle
 
 # Example
-```julia
-julia> hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)
+```jldoctest
+julia> using FeigenbaumUtil; hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)
 true
 ```
 """
@@ -160,10 +161,14 @@ Given a map and parameter value corresponding to a cycle of period 'period'
 returns the associated cyclic permutation
 
 # Example
-```julia
-julia> f,fc,maxloc = selectmap("Log");
+```jldoctest
+julia> using FeigenbaumUtil; f,fc,maxloc = selectmap("Log");
+
 julia> getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
-[2 3 1]
+3-element Array{Int64,1}:
+ 2
+ 3
+ 1
 ```
 """
 function getCyclicPermFromLambda{T1<:Real,T2<:Real}(f::Function, period::Int, lam::T1 = 0.5, x0::T2 = 0.5)
@@ -337,9 +342,18 @@ end # function findBoundsUnivX
 Given array of transpositions, [(a,b), (c,d), ...] return full permutation
 of length l associated with this
 
-# Examples
-julia> makepermfromtranspositions([(1,5), (2,3)], 7)
-[5,3,2,4,1,6,7]
+# Example
+```jldoctest
+julia> using FeigenbaumUtil; makepermfromtranspositions([(1,5), (2,3)], 7)
+7-element Array{Int64,1}:
+ 5
+ 3
+ 2
+ 4
+ 1
+ 6
+ 7
+```
 """
 function makepermfromtranspositions(trans::Array{Tuple{Int, Int},1}, l::Int)
     perm = [i for i in 1:l]
@@ -359,9 +373,13 @@ end # function makepermfromtranspositions
 
 Given permutation return transpositions contained within if they exist
 
-# Examples
-julia> maketranspositionsfromperm([5,3,2,4,1,6,7])
-[(1,5), (2,3)]
+# Example
+```jldoctest
+julia> using FeigenbaumUtil; maketranspositionsfromperm([5,3,2,4,1,6,7])
+2-element Array{Tuple{Int64,Int64},1}:
+ (1,5)
+ (2,3)
+```
 """
 function maketranspositionsfromperm(perm)
     trans  = [(m,perm[m]) for m = 1:length(perm) if perm[m] ≠ m]
