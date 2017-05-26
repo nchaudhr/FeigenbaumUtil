@@ -35,7 +35,7 @@ function maketranspositionsfrompermtest()
 end
 
 @testset "Util" begin
-    @test hasperiodn([4 5 7 6 3 2 1], 5) == false
+    @test hasperiodn([4 5 7 6 3 2 1], 5) == true
     @test hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3) == true
     @test getCyclicPermFromLambdaTest()
     @test findinverseTest()
