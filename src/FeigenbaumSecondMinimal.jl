@@ -1,9 +1,10 @@
 """
     getsecminfromfile(period)
 
-Load second minimal periodic orbits from file Limited to periodic orbits: 7,9,11,13
+Load second minimal periodic orbits from file into Vector Array `perms`. Limited to periodic orbits: 7,9,11,13
 """
 function getsecminfromfile(period::Int)
+  (period ∉ [7,9,11,13]) && error("Period must be one of 7,9,11,13")
   fl = joinpath(dirname(@__FILE__),"..","data",string("SecondMinimal",period,"s.jl"))
   include(fl)
 end
@@ -11,7 +12,8 @@ end
 """
     checkperminvolution(p1,p2,flag)
 
-Check if 2 permutations have a involutory relationship, that is, if Tp1 = p2 and p1 = Tp2
+Check if 2 permutations have a involutory relationship, that is, if Tp1 = p2 and
+ p1 = Tp2. Return the involution if so, empty otherwise.
 """
 function checkperminvolution(p1,p2,flag=true)
   T = [find(p1 .== a)[1] for a in p2]
