@@ -38,7 +38,8 @@ Return true if permutation perm has subgraph of period n
 
 # Example
 ```julia
- hasperiodn([4 5 7 6 3 2 1], 5)
+ julia> hasperiodn([4, 5, 7, 6, 3, 2, 1], 5)
+ false
 ```
 """
 function hasperiodn(perm, n)
@@ -52,7 +53,8 @@ Return true if permutation perm contains disjoint permutation of order cycle
 
 # Example
 ```julia
-hasclosedcycle([3 5 4 6 7 1 2], 3)
+julia> hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)
+true
 ```
 """
 function hasclosedcycle(perm, cycle)
@@ -166,6 +168,8 @@ julia> getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
 """
 function getCyclicPermFromLambda{T1<:Real,T2<:Real}(f::Function, period::Int, lam::T1 = 0.5, x0::T2 = 0.5)
     # Any difference between this and sortperm(iterateF(...))? Result is the same for 3 orbit, but that is a special case.
+    # Yes, sortperm(iterateF(...)) produces [2,5,3,4,1] for 5 orbit, expected is [3,5,4,2,1]
+    # Although this could probably done more efficiently
     perm = circshift(iterateF(f, period, lam, x0),1)
     perm1 = Array{Int}(period)
     cyc = sortperm(perm)
@@ -326,3 +330,40 @@ function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lam::T1, k:
 
   xmin, xmax, sup1, d1, wdt, hgt
 end # function findBoundsUnivX
+
+"""
+    makepermfromtranspositions(trans::Array{Tuple{Int, Int},1}, l::Int)
+
+Given array of transpositions, [(a,b), (c,d), ...] return full permutation
+of length l associated with this
+
+# Examples
+julia> makepermfromtranspositions([(1,5), (2,3)], 7)
+[5,3,2,4,1,6,7]
+"""
+function makepermfromtranspositions(trans::Array{Tuple{Int, Int},1}, l::Int)
+    perm = [i for i in 1:l]
+    for tran in trans
+        perm[[tran...]] = perm[[reverse(tran)...]]
+
+        ## OR this? faster?
+        # perm[tran[1]] = perm[tran[2]]
+        # perm[tran[2]] = perm[tran[1]]
+    end
+
+    perm
+end # function makepermfromtranspositions
+
+"""
+    maketranspositionsfromperm(perm)
+
+Given permutation return transpositions contained within if they exist
+
+# Examples
+julia> maketranspositionsfromperm([5,3,2,4,1,6,7])
+[(1,5), (2,3)]
+"""
+function maketranspositionsfromperm(perm)
+    trans  = [(m,perm[m]) for m = 1:length(perm) if perm[m] ≠ m]
+    return [trans[i] for i=1:length(trans) if trans[i][1] < trans[i][2] && (trans[i][2],trans[i][1]) ∈ trans]
+end # function maketranspositionsfromperm

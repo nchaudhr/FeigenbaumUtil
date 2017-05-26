@@ -17,6 +17,8 @@ export
     findBoundsUnivX,
     hasperiodn,
     hasclosedcycle,
+    maketranspositionsfromperm,
+    makepermfromtranspositions,
     # End Core ----------------------------
     # Params ------------------------------
     findparams,
