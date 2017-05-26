@@ -11,6 +11,20 @@ parts: [FeigenbaumCore](@ref), [FeigenbaumParam](@ref), and
 [FeigenbaumSecondMinimal](@ref). The function descriptions should be sufficient for
 documentation.
 
+## Usage
+
+To use this package first clone the repository
+
+```julia
+julia> Pkg.clone("https://github.com/nchaudhr/FeigenbaumUtil")
+```
+
+Then let Julia know you're ready to start playing
+
+```julia
+julia> using FeigenbaumUtil
+```
+
 ## FeigenbaumCore
 ```@docs
 selectmap
