@@ -196,14 +196,25 @@ end # function getCyclicPermFromLambda
 """
     findinverse(perm)
 
-Return inverse permutation of cyclic perm. That is, if ``π = [n n-1 n-2 … 2 1]``,
-returns ``π(perm(π))``
+Return inverse permutation of cyclic perm. That is, if ``ω = [n n-1 n-2 … 2 1]``,
+returns ``ω(perm(ω))``
 """
 function findinverse(perm::Vector{Int})
     # look to reverse and reverseind
     indices = collect(length(perm):-1:1)
-    [indices[perm[i]] for i in indices]
+    return [indices[perm[i]] for i in indices]
 end # function findinverse
+
+"""
+    applyinvtransform(perm, invtransform)
+
+Let α = perm and β = invtransform, returns ``β(α(β))``. Used to test the action
+of permutations with properties ``β(β) = I`` and ``β = β^{-1} = ω(β(ω))``. See
+[findinverse](@ref)
+"""
+function applyinvtransform(perm, invtransform)
+    return [invtransform[perm[i]] for i in invtransform]
+end
 
 # GetFundamentalCycles.m
 function findfuncycle(start, int, perm)
