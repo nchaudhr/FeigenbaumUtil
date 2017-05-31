@@ -13,6 +13,7 @@ export
     nestF!,
     getCyclicPermFromLambda,
     findinverse,
+    applyinvtransform,
     findDistanceReg,
     findBoundsUnivX,
     hasperiodn,

@@ -23,6 +23,7 @@ end # function getCyclicPermFromLambdaTest
     @test hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3) == true
     @test getCyclicPermFromLambdaTest()
     @test findinverse(findinverse([3,2,1,4])) == [3,2,1,4]
+    @test applyinvtransform([4,5,7,6,3,2,1],[7,6,5,4,3,2,1]) == [7,6,5,2,1,3,4]
     @testset "findDistanceRegTest" begin
         @test isapprox(findDistanceReg(selectmap("Log")[1], selectmap("Log")[3], 0.8090169943749475, 0, 1), 0.30901699437494745)
         @test isapprox(findDistanceReg(selectmap("Cub")[1], selectmap("Cub")[3], 0.81649658092772603273242802490196,0,1), 0.2391463117381003)
