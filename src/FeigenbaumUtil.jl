@@ -37,7 +37,8 @@ export
     unpacksecminperm,
     getsecminperms,
     generatePermRelations,
-    gettopologicalstructure
+    gettopologicalstructure,
+    checksettingforvalidity
     # End SecondMinimal -------------------
 #-------------------------------------------------------------------------------
 

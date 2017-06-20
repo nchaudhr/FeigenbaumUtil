@@ -48,6 +48,7 @@ unpacksecminperm
 getsecminperms
 generatePermRelations
 gettopologicalstructure
+checksettingforvalidity
 ```
 
 ## Index

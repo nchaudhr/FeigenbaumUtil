@@ -378,3 +378,224 @@ function gettopologicalstructure(perm)
 
   return topst
 end
+
+"""
+    checksettingforvalidity(period, m, nthmin, setting)
+
+Checks whether setting, a tuple, produces a valid nth minimal general
+cyclic permutation of periodic orbit period 2k+1 for path of length m.
+"""
+function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
+    perm    = ["" for i=1:period]
+    options = [i for i=1.0:period]
+    posits   = getpositions(period, m, setting)
+    k = floor(Int,period/2)
+    validperm = true
+
+    for i = 1:m
+        f = getforwardrules(i, m)
+        b = getbackwardrules(i, m, nthmin, k)
+
+        if (!setimage(m, posits, f, b, i, perm, options))
+            validperm = false
+            break
+        end
+        # println(perm)
+    end
+
+    js = ["J$(i)" for i=1:length(setting)]
+    split = posits["1"][1] #<- left end pt of J_{r_{1}}
+    for i = 1:m
+        if ((posits["$i"][2] < split) & reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) |
+             ((posits["$i"][1] > split) & reduce(|, map(x->posits["$i"][1] == posits[x][2], js)))
+
+            perm[posits["$i"][1]] = string("<", perm[posits["$i"][1]])
+            perm[posits["$i"][2]] = string(perm[posits["$i"][2]],">")
+        end
+    end
+
+    if (perm[1] == "" || perm[end] == "")
+        validperm = false
+    end
+
+    return validperm, perm
+end
+
+function setimage(m, posits, f, b, i, perm, options)
+    if (i == m-1)
+        if (perm[posits["$i"][1]] == "")
+            perm[posits["$i"][2]] = "$(getimageoptions(posits, 1, f[end], options, -1))"
+            perm[posits["$i"][1]] = "$(getimageoptions(posits, b[end] + 2, 1, options,1))"
+        else
+            perm[posits["$i"][2]] = "$(getimageoptions(posits, 1, f[end], options, -1))"
+        end
+    elseif (i == m-2)
+            if (perm[posits["$i"][2]] == "")
+                perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end], length(options), options, 0))"
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, 1, b[end] + 2, options,1))"
+            else
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, f[end], length(options), options, 0))"
+            end
+    elseif (i == m)
+        if (perm[posits["$i"][2]] == "")
+            perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end], length(options), options, 0))"
+            perm[posits["$i"][1]] = "$(getimageoptions(posits, b[end] + 2, 1, options,1))"
+        else
+            perm[posits["$i"][1]] = "$(getimageoptions(posits, b[end] + 2, 1, options,1))"
+        end
+    elseif (mod(m,2) == 0)
+        if (mod(i,2) == 0)
+            if (perm[posits["$i"][2]] == "")
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, f[end],f[end]+2, options,1))"
+
+                if (i == 2)
+                    perm[posits["$i"][2]] = "$(getimageoptions(posits, 1, f[end], options,1))"
+                else
+                    perm[posits["$i"][2]] = "$(getimageoptions(posits, 1, b[end]+2, options,1))"
+                end
+            else
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, f[end],f[end]+2, options,1))"
+            end
+        else
+            if (perm[posits["$i"][1]] == "")
+                perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end] + 2, f[end], options,1))"
+                if (i == 1)
+                    perm[posits["$i"][1]] = "$(getimageoptions(posits, 1, b[end]+2, options,1))"
+                else
+                    perm[posits["$i"][1]] = "$(getimageoptions(posits, b[end] + 2, 1, options,1))"
+                end
+            else
+                perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end] + 2, f[end], options,1))"
+            end
+        end
+    else
+        if (mod(i,2) == 0)
+            if (perm[posits["$i"][1]] == "")
+                perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end] + 2, f[end], options,1))"
+
+                if (i != 2)
+                    perm[posits["$i"][1]] = "$(getimageoptions(posits, b[end] + 2, 1, options,1))"
+                end
+            else
+                perm[posits["$i"][2]] = "$(getimageoptions(posits, f[end] + 2, f[end], options,1))"
+            end
+        else
+            if (perm[posits["$i"][2]] == "")
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, f[end],f[end]+2, options,1))"
+                if (i == 1)
+                    perm[posits["$i"][2]] = "$(getimageoptions(posits, b[end]+2, 1, options,1))"
+                else
+                    perm[posits["$i"][2]] = "$(getimageoptions(posits, 1, b[end]+2, options,1))"
+                end
+            else
+                perm[posits["$i"][1]] = "$(getimageoptions(posits, f[end],f[end]+2, options,1))"
+            end
+        end
+    end
+
+    if (perm[posits["$i"][1]] == "" || perm[posits["$i"][2]] == "")
+        return false
+    end
+    return true
+end
+
+function getimageoptions(dict, a, b, options, termInt)
+    if termInt == -1
+        if (a == dict["$b"][1])
+            opts = intersect(a, options)
+        else
+            opts = intersect(a:dict["$b"][1], options)
+        end
+    elseif termInt == 0
+        if (b == dict["$a"][2])
+            opts = intersect(b, options)
+        else
+            opts = intersect(dict["$a"][2]:b, options)
+        end
+    elseif termInt == 1
+        if (dict["$a"][2] == dict["$b"][1])
+            opts = intersect(dict["$a"][2], options)
+        else
+            opts = intersect(dict["$a"][2]:dict["$b"][1], options)
+        end
+    else
+        println(termInt) && error("termInt unexpeced.")
+    end
+
+    if (isempty(opts))
+        opts = ""
+    else
+        if (length(opts) == 1)
+            options[convert(Array{Int,1},opts)] = 0
+        end
+    end
+
+    return opts
+end
+
+function getforwardrules(interval, m)
+    return interval == m ? [1] : (interval == 1 ? [2] : [interval + 1])
+end
+
+function getbackwardrules(interval, m, n, k)
+    if interval == 1
+        spots = [1]
+    elseif interval == 2
+        spots = []
+    elseif interval == m
+        spots = [i for i=m-2*(k-n+1):-2:2] # sort(vcat([i for i=m-2*(k-n+1):-2:2],[i for i=interval-1:-2:2]), rev=true)
+    else
+        spots = [i for i=interval-1:-2:2]
+    end
+
+    return reverse(spots)
+end
+
+function getpositions(period, m, setting)
+    D = Dict{String,Array{Int,1}}()
+    spots = [setting[i+1] + i for i=0:length(setting)-1]
+
+    for i = 1:length(setting)
+        get!(D, "J$(i)", [spots[i], spots[i]+1])
+    end
+
+    currinterval = m
+    for i = 1:spots[1]-1
+        get!(D, "$currinterval", [i,i+1])
+        currinterval = updatecurrinterval(m, currinterval)
+    end
+    for i = 2:length(spots)
+        for j = spots[i-1]+1:spots[i]-1
+            get!(D, "$currinterval", [j,j+1])
+            currinterval = updatecurrinterval(m, currinterval)
+        end
+    end
+    for i = spots[end]+1:period
+        get!(D, "$currinterval", [i,i+1])
+        currinterval = updatecurrinterval(m, currinterval)
+    end
+
+    return D
+end
+
+function updatecurrinterval(m, currinterval)
+    if mod(m,2) == 0
+        if currinterval == 2
+            currinterval = 1
+        elseif mod(currinterval,2) == 1
+            currinterval += 2
+        else
+            currinterval -= 2
+        end
+    else
+        if currinterval == 1
+            currinterval = 2
+        elseif mod(currinterval,2) == 0
+            currinterval += 2
+        else
+            currinterval -= 2
+        end
+    end
+
+    return currinterval
+end

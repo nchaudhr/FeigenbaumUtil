@@ -25,42 +25,5 @@ Then let Julia know you're ready to start playing
 julia> using FeigenbaumUtil
 ```
 
-## FeigenbaumCore
-```@docs
-selectmap
-iterateF
-iterateF!
-nestF
-nestF!
-getCyclicPermFromLambda
-findinverse
-findDistanceReg
-findBoundsUnivX
-hasperiodn
-hasclosedcycle
-```
-
-## FeigenbaumParam
-```@docs
-findparams
-getperioddblparams
-writeparam2tex
-```
-
-## FeigenbaumSecondMinimal
-```@docs
-getsecminfromfile
-checkperminvolution
-getadjacencymatrixfromlistsp
-getadjacencymatrixfromlist
-getadjacencymatrixsp
-getadjacencylist
-getadjacencymatrix
-unpacksecminperm
-getsecminperms
-generatePermRelations
-gettopologicalstructure
-```
-
 Some examples using FeigenbaumUtil to produce graphics related to universality are implemented in `src/GraphicsExamples.jl`; these routines are only tested on the Travis CI Linux platform, since most of
 their dependencies are only tested on that platform as well.
