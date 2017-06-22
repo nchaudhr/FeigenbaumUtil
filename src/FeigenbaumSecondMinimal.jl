@@ -543,7 +543,7 @@ function getbackwardrules(interval, m, n, k)
     elseif interval == 2
         spots = []
     elseif interval == m
-        spots = [i for i=m-2*(k-n+1):-2:2] # sort(vcat([i for i=m-2*(k-n+1):-2:2],[i for i=interval-1:-2:2]), rev=true)
+        spots = [i for i=m-2*(k-n+1):-2:2]
     else
         spots = [i for i=interval-1:-2:2]
     end
