@@ -395,6 +395,7 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
     for i = 1:m
         f = getforwardrules(i, m)
         b = getbackwardrules(i, m, nthmin, k)
+        # println("Forward: $f, Backward: $b, ($i, $m, $(nthmin), $k)")
 
         if (!setimage(m, posits, f, b, i, perm, options))
             validperm = false
@@ -414,11 +415,28 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         end
     end
 
-    if (perm[1] == "" || perm[end] == "")
-        validperm = false
+    if (perm[1] == "" || perm[end] == "") && validperm
+        validperm = reduce(&, [fillblanks(perm, options, i, k) for i=1:period if perm[i] == ""])
     end
 
     return validperm, perm
+end
+
+function fillblanks(perm, options, i, k)
+    if (i ≤ k+1)
+        filler = intersect(k+2:length(perm), options)
+    else
+        filler = intersect(1:k+1, options)
+    end
+
+    if isempty(filler)
+        return false
+    elseif length(filler) == 1
+        options[convert(Array{Int,1},filler)] = 0
+    end
+
+    perm[i] = "$(filler)"
+    return true
 end
 
 function setimage(m, posits, f, b, i, perm, options)
@@ -543,7 +561,7 @@ function getbackwardrules(interval, m, n, k)
     elseif interval == 2
         spots = []
     elseif interval == m
-        spots = [i for i=m-2*(k-n+1):-2:2]
+        spots = [i for i = (m - (2*k-2*n+2)):-2:2]
     else
         spots = [i for i=interval-1:-2:2]
     end
