@@ -561,7 +561,7 @@ function getbackwardrules(interval, m, n, k)
     elseif interval == 2
         spots = []
     elseif interval == m
-        spots = [i for i = (m - (2*k-2*n+2)):-2:2]
+        spots = [i for i = (m - (2*k-2*n+2)):-2:0]
     else
         spots = [i for i=interval-1:-2:2]
     end
