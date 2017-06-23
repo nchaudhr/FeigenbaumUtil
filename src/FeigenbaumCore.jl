@@ -26,7 +26,7 @@ function selectmap(func)
       f=(x,l)->(l*(1-(2*x-1)^4))#qua
       fc=(x,l)->(-l.*(x.^4.*1.6e1-1.0)-1.0./2.0)
     else
-      throw("Must specify one of Log, Sin, Cub, or Qua for use")
+      error("Must specify one of Log, Sin, Cub, or Qua for use")
     end
 
     f, fc, maxloc
@@ -100,7 +100,7 @@ function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::Abstra
     lams = ones(T1, length(x), 1)*lam
 
     for n in 1:ites
-      x = map(f, x, lams)
+      x[:] = map(f, x, lams)
     end
 
     x
@@ -257,8 +257,8 @@ end # function getFundamentalCycles
 function issamecycle(cyc, lst)
     N = length(cyc) - 1
     for n in 0:N
-        tmp = circshift(lst, (0, n))
-        if all(cyc .= tmp)
+        tmp = circshift(lst, n)
+        if all(cyc .== tmp)
             return true
         end
     end
