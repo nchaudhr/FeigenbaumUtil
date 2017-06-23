@@ -307,7 +307,7 @@ function generatePermRelations(k, includeInverses = false)
   perms = unpacksecminperm(rawp)
 
   if includeInverses
-      nines =  Array{Vector{Int},1}()
+      nines =  Vector{Vector{Int}}()
       for p in perms
           push!(nines, p)
       end
@@ -319,12 +319,12 @@ function generatePermRelations(k, includeInverses = false)
   end
 
   numPerms = length(nines)
-  pGraph = Array{Vector{Int},1}()
-  pT= Array{Array{Int,2},1}()
-  pTinv = Array{Array{Int,2},1}()
-  tColors = Array{String,1}()
-  involT = Array{Vector{Int},1}()
-  topStruct = Array{String,1}()
+  pGraph = Vector{Vector{Int}}()
+  pT= Vector{Array{Int,2}}()
+  pTinv = Vector{Array{Int,2}}()
+  tColors = Vector{String}()
+  involT = Vector{Vector{Int}}()
+  topStruct = Vector{String}()
   setting = Vector{Tuple{Int,Int}}()
 
   for i = 1:numPerms
@@ -387,7 +387,7 @@ cyclic permutation of periodic orbit period 2k+1 for path of length m.
 """
 function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
     perm    = ["" for i=1:period]
-    options = [i for i=1.0:period]
+    options = [float(i) for i=1:period]
     posits  = getpositions(period, m, setting)
     k = floor(Int,period/2)
     validperm = true
@@ -554,7 +554,7 @@ function getbackwardrules(interval, m, n, k)
 end
 
 function getpositions(period, m, setting)
-    D = Dict{String,Array{Int,1}}()
+    D = Dict{String,Vector{Int}}()
     spots = [setting[i+1] + i for i=0:length(setting)-1]
 
     for i = 1:length(setting)
