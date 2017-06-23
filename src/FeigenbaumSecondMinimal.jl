@@ -107,7 +107,7 @@ SecMinPerm(t,b,gs,gsp,k::Int,jhat,jtil) = SecMinPerm(t(k),b(k),gs(k),gsp(k),2*k+
 Expands SecondMinimal into full permutations
 """
 function unpacksecminperm(permtype::SecMinPerm)
-  perm = zeros(Int, permtype.period))
+  perm = zeros(Int, permtype.period)
   perm[permtype.top] = permtype.bottom
   k = (permtype.period-1) / 2
 
