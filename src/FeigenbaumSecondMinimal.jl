@@ -107,7 +107,7 @@ SecMinPerm(t,b,gs,gsp,k::Int,jhat,jtil) = SecMinPerm(t(k),b(k),gs(k),gsp(k),2*k+
 Expands SecondMinimal into full permutations
 """
 function unpacksecminperm(permtype::SecMinPerm)
-  perm = Vector(zeros(Int, permtype.period))
+  perm = zeros(Int, permtype.period))
   perm[permtype.top] = permtype.bottom
   k = (permtype.period-1) / 2
 
@@ -127,7 +127,7 @@ end
 
 Worker function to unpack SecondMinimal permutations into an Array
 """
-function unpacksecminperm(permtype::Array{SecMinPerm,1})
+function unpacksecminperm(permtype::Vector{SecMinPerm})
   return [unpacksecminperm(permtype[i]) for i = 1:size(permtype,1)]
 end
 
@@ -144,19 +144,19 @@ function getsecminperms(period::Int)
   # Construct all the fixed cases from settings (2k-1), (1,2k-1), (2,2k-2)
   # (2,2k-1), (k,k+1)
   m2km1_1 = SecMinPerm(
-    k->Vector([1,k-1,k,k+1,k+2,k+3,k+4]),
-    k->Vector([k+1,k+2,k+4,k+3,k,k-1,k-2]),
-    k->Vector([2,k+5]),
-    k->Vector([k-2,2*k+1]),
+    k->[1,k-1,k,k+1,k+2,k+3,k+4],
+    k->[k+1,k+2,k+4,k+3,k,k-1,k-2],
+    k->[2,k+5],
+    k->[k-2,2*k+1],
     k,
     2*k-1,
     0
   )# 1
   m2km1_2 = SecMinPerm(
-    k->Vector([1,k-1,k,k+1,k+2,k+3,k+4]),
-    k->Vector([k,k+4,k+2,k+3,k+1,k-1,k-2]),
-    k->Vector([2,k+5]),
-    k->Vector([k-2,2*k+1]),
+    k->[1,k-1,k,k+1,k+2,k+3,k+4],
+    k->[k,k+4,k+2,k+3,k+1,k-1,k-2],
+    k->[2,k+5],
+    k->[k-2,2*k+1],
     k,
     2*k-1,
     0
@@ -164,48 +164,48 @@ function getsecminperms(period::Int)
   perms = [m2km1_1; m2km1_2]
 
   m2km2_12km1_1 = SecMinPerm(
-    k->Vector([1,2,3,k+1,2*k-1,2*k,2*k+1]),
-    k->Vector([2*k+1,k+1,2*k,k+2,3,1,2]),
-    k->Vector([4,k+2]),
-    k->Vector([k,2*k-2]),
+    k->[1,2,3,k+1,2*k-1,2*k,2*k+1],
+    k->[2*k+1,k+1,2*k,k+2,3,1,2],
+    k->[4,k+2],
+    k->[k,2*k-2],
     k,
     1,
     2*k-1
   )#3
   m2km2_12km1_2 = SecMinPerm(
-    k->Vector([1,2,3,k+1,2*k-1,2*k,2*k+1]),
-    k->Vector([2*k,k+1,2*k+1,k+2,3,2,1]),
-    k->Vector([4,k+2]),
-    k->Vector([k,2*k-2]),
+    k->[1,2,3,k+1,2*k-1,2*k,2*k+1],
+    k->[2*k,k+1,2*k+1,k+2,3,2,1],
+    k->[4,k+2],
+    k->[k,2*k-2],
     k,
     1,
     2*k-1
   )#4
   perms = [perms; m2km2_12km1_1; m2km2_12km1_2]
   m2km2_22km1_1 = SecMinPerm(
-    k->Vector([1,2,3,k+1,2*k-1,2*k,2*k+1]),
-    k->Vector([k+1,2*k,2*k+1,k+2,3,1,2]),
-    k->Vector([4,k+2]),
-    k->Vector([k,2*k-2]),
+    k->[1,2,3,k+1,2*k-1,2*k,2*k+1],
+    k->[k+1,2*k,2*k+1,k+2,3,1,2],
+    k->[4,k+2],
+    k->[k,2*k-2],
     k,
     2,
     2*k-1
   )#5
   m2km2_22km1_2 = SecMinPerm(
-    k->Vector([1,2,3,k+1,2*k-1,2*k,2*k+1]),
-    k->Vector([k+1,2*k+1,2*k,k+2,2,1,3]),
-    k->Vector([4,k+2]),
-    k->Vector([k,2*k-2]),
+    k->[1,2,3,k+1,2*k-1,2*k,2*k+1],
+    k->[k+1,2*k+1,2*k,k+2,2,1,3],
+    k->[4,k+2],
+    k->[k,2*k-2],
     k,
     2,
     2*k-1
   )#6
   perms = [perms; m2km2_22km1_1; m2km2_22km1_2]
   m2km2_22km2_1 = SecMinPerm(
-    k->Vector([1,2,3,4,2*k-1,2*k,2*k+1]),
-    k->Vector([k+1,2*k,2*k+1,2*k-1,2,3,1]),
-    k->Vector([5]),
-    k->Vector([2*k-2]),
+    k->[1,2,3,4,2*k-1,2*k,2*k+1],
+    k->[k+1,2*k,2*k+1,2*k-1,2,3,1],
+    k->[5],
+    k->[2*k-2],
     k,
     2,
     2*k-2
@@ -213,10 +213,10 @@ function getsecminperms(period::Int)
   perms = [perms; m2km2_22km2_1]
   if k > 3
     m2km2_22km2_2 = SecMinPerm(
-      k->Vector([1,2,3,4,2*k-1,2*k,2*k+1]),
-      k->Vector([k+1,2*k-1,2*k+1,2*k,3,2,1]),
-      k->Vector([5]),
-      k->Vector([2*k-2]),
+      k->[1,2,3,4,2*k-1,2*k,2*k+1],
+      k->[k+1,2*k-1,2*k+1,2*k,3,2,1],
+      k->[5],
+      k->[2*k-2],
       k,
       2,
       2*k-2
@@ -225,19 +225,19 @@ function getsecminperms(period::Int)
   end
 
   m2km2_kk1_1 = SecMinPerm(
-    k->Vector([1,k-1,k,k+1,k+2,k+3,k+4]),
-    k->Vector([k+1,k+4,k+2,k+3,k-1,k,k-2]),
-    k->Vector([2,k+5]),
-    k->Vector([k-2,2*k+1]),
+    k->[1,k-1,k,k+1,k+2,k+3,k+4],
+    k->[k+1,k+4,k+2,k+3,k-1,k,k-2],
+    k->[2,k+5],
+    k->[k-2,2*k+1],
     k,
     k,
     k+1
   )#9/8*
   m2km2_kk1_3 = SecMinPerm(
-    k->Vector([1,k-1,k,k+1,k+2,k+3,k+4]),
-    k->Vector([k,k+4,k+3,k+2,k-1,k+1,k-2]),
-    k->Vector([2,k+5]),
-    k->Vector([k-2,2*k+1]),
+    k->[1,k-1,k,k+1,k+2,k+3,k+4],
+    k->[k,k+4,k+3,k+2,k-1,k+1,k-2],
+    k->[2,k+5],
+    k->[k-2,2*k+1],
     k,
     k,
     k+1
@@ -250,10 +250,10 @@ function getsecminperms(period::Int)
       #Case (i,2k-i)
       if (i-1) > 2
         a = SecMinPerm(
-          k->Vector([i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3]),
-          k->Vector([2*k-i+2,2*k-i+4,2*k-i+3,2*k-i+1,i+1,i,i-1]),
-          k->Vector([1,i+3,2*k-i+4]),
-          k->Vector([i-2,2*k-i,2*k+1]),
+          k->[i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3],
+          k->[2*k-i+2,2*k-i+4,2*k-i+3,2*k-i+1,i+1,i,i-1],
+          k->[1,i+3,2*k-i+4],
+          k->[i-2,2*k-i,2*k+1],
           k,
           i,
           2*k-i
@@ -262,19 +262,19 @@ function getsecminperms(period::Int)
       end
       # Perm shared in same row
       b = SecMinPerm(
-        k->Vector([i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3]),
-        k->Vector([2*k-i+4,2*k-i+2,2*k-i+3,2*k-i+1,i,i+1,i-1]),
-        k->Vector([1,i+3,2*k-i+4]),
-        k->Vector([i-2,2*k-i,2*k+1]),
+        k->[i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3],
+        k->[2*k-i+4,2*k-i+2,2*k-i+3,2*k-i+1,i,i+1,i-1],
+        k->[1,i+3,2*k-i+4],
+        k->[i-2,2*k-i,2*k+1],
         k,
         i,
         2*k-i
       )
       c = SecMinPerm(
-        k->Vector([i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3]),
-        k->Vector([2*k-i+4,2*k-i+2,2*k-i+3,2*k-i+1,i+1,i-1,i]),
-        k->Vector([1,i+3,2*k-i+4]),
-        k->Vector([i-2,2*k-i,2*k+1]),
+        k->[i-1,i,i+1,i+2,2*k-i+1,2*k-i+2,2*k-i+3],
+        k->[2*k-i+4,2*k-i+2,2*k-i+3,2*k-i+1,i+1,i-1,i],
+        k->[1,i+3,2*k-i+4],
+        k->[i-2,2*k-i,2*k+1],
         k,
         i,
         2*k-i
@@ -282,10 +282,10 @@ function getsecminperms(period::Int)
       perms = [perms; b; c]
 
       g = SecMinPerm(
-        k->Vector([i-1,i,i+1,2*k-i+1,2*k-i+2,2*k-i+3,2*k-i+4]),
-        k->Vector([2*k-i+4,2*k-i+3,2*k-i+2,i,i-1,i+1,i-2]),
-        k->Vector([1,i+2,2*k-i+5]),
-        k->Vector([i-2,2*k-i,2*k+1]),
+        k->[i-1,i,i+1,2*k-i+1,2*k-i+2,2*k-i+3,2*k-i+4],
+        k->[2*k-i+4,2*k-i+3,2*k-i+2,i,i-1,i+1,i-2],
+        k->[1,i+2,2*k-i+5],
+        k->[i-2,2*k-i,2*k+1],
         k,
         i,
         2*k-i+1
@@ -333,7 +333,7 @@ function generatePermRelations(k, includeInverses = false)
 
       T = checkperminvolution(nines[i], nines[j])
       if !isempty(T)
-        push!(pGraph, Vector([i,j]))
+        push!(pGraph, [i,j]))
         push!(involT, T)
 
         ai = getadjacencymatrix(nines[i])
