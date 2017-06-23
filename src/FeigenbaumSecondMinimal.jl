@@ -333,7 +333,7 @@ function generatePermRelations(k, includeInverses = false)
 
       T = checkperminvolution(nines[i], nines[j])
       if !isempty(T)
-        push!(pGraph, [i,j]))
+        push!(pGraph, [i,j])
         push!(involT, T)
 
         ai = getadjacencymatrix(nines[i])
