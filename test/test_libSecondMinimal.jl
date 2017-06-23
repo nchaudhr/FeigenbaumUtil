@@ -40,10 +40,14 @@ function unpacksecminpermTest()
     return unpacksecminperm(p) == [4,5,7,6,3,2,1]
 end #function unpacksecminpermTest
 
-(b,gp) = (true, String["[7.0]", "<[11.0, 12.0]", "[13.0]>", "[11.0, 12.0]","[10.0]", "[9.0]", "[8.0]", "[6.0]", "[5.0]", "[3.0, 4.0]", "[2.0]", "<[3.0, 4.0, 7.0]", "[1.0]>"])
+if VERSION < v"0.6-"
+    const checksettingforvalidityTestExpected = String["[7.0]", "<[11.0,12.0]", "[13.0]>", "[11.0,12.0]","[10.0]", "[9.0]", "[8.0]", "[6.0]", "[5.0]", "[3.0,4.0]", "[2.0]", "<[3.0,4.0,7.0]", "[1.0]>"]
+else
+    const checksettingforvalidityTestExpected = String["[7.0]", "<[11.0, 12.0]", "[13.0]>", "[11.0, 12.0]","[10.0]", "[9.0]", "[8.0]", "[6.0]", "[5.0]", "[3.0, 4.0]", "[2.0]", "<[3.0, 4.0, 7.0]", "[1.0]>"]
+end
 function checksettingforvalidityTest()
     t,p = checksettingforvalidity(13,10,3,(3,10))
-    return (b,gp) == (t,p)
+    return t == true && p == checksettingforvalidityTestExpected
 end
 
 @testset "SecondMinimal" begin
