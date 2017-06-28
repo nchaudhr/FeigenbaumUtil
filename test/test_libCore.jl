@@ -19,8 +19,24 @@ end # function getCyclicPermFromLambdaTest
 #getCyclicPermFromLambdaTest()
 
 @testset "Core" begin
+    @test_throws ErrorException selectmap("Missing")
+    logmap = first(selectmap("Log"))
     @test hasperiodn([4 5 7 6 3 2 1], 5) == true
+    @test hasclosedcycle([4, 2, 3, 1], 4) == true # Test short-circuiting behavior
     @test hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3) == true
+    @test hasclosedcycle([2, 3, 4, 1], 2) == false
+    x = linspace(0, 1, 10)
+    x1 = collect(x)
+    iterateF!(logmap, 5, 0.3, x1)
+    @test all(x1 .== iterateF(logmap, 5, 0.3, x))
+    @test nestF(logmap, 5, 0.3, x[2]) == x1[2]
+
+    x2 = collect(x)
+    @test all(nestF!(logmap, 2, 5, 0.1, x2) .<= x) # For small parameter values, the logistic map has x=0 as an attracting fixed point.
+
+    @test FeigenbaumUtil.issamecycle([4,3,2,1], [3,2,1,4])
+    @test !FeigenbaumUtil.issamecycle([4,3,2,1], [2,3,1,4])
+
     @test getCyclicPermFromLambdaTest()
     @test findinverse(findinverse([3,2,1,4])) == [3,2,1,4]
     @test applyinvtransform([4,5,7,6,3,2,1],[7,6,5,4,3,2,1]) == [7,6,5,2,1,3,4]
@@ -38,4 +54,5 @@ end # function getCyclicPermFromLambdaTest
     end
     @test makepermfromtranspositions([(1,5), (2,3)], 7) == [5,3,2,4,1,6,7]
     @test maketranspositionsfromperm([5,3,2,4,1,6,7]) == [(1,5), (2,3)]
+
 end
