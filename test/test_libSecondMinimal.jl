@@ -41,9 +41,9 @@ function unpacksecminpermTest()
 end #function unpacksecminpermTest
 
 if VERSION < v"0.6-"
-    const checksettingforvalidityTestExpected = String["[7.0]", "<[11.0,12.0]", "[13.0]>", "[11.0,12.0]","[10.0]", "[9.0]", "[8.0]", "[6.0]", "[5.0]", "[3.0,4.0]", "[2.0]", "<[3.0,4.0,7.0]", "[1.0]>"]
+    const checksettingforvalidityTestExpected = String["[7]", "<[11,12]", "[13]>", "[11,12]","[10]", "[9]", "[8]", "[6]", "[5]", "[3,4]", "[2]", "<[3,4,7]", "[1]>"]
 else
-    const checksettingforvalidityTestExpected = String["[7.0]", "<[11.0, 12.0]", "[13.0]>", "[11.0, 12.0]","[10.0]", "[9.0]", "[8.0]", "[6.0]", "[5.0]", "[3.0, 4.0]", "[2.0]", "<[3.0, 4.0, 7.0]", "[1.0]>"]
+    const checksettingforvalidityTestExpected = String["[7]", "<[11, 12]", "[13]>", "[11, 12]","[10]", "[9]", "[8]", "[6]", "[5]", "[3, 4]", "[2]", "<[3, 4, 7]", "[1]>"]
 end
 function checksettingforvalidityTest()
     t,p = checksettingforvalidity(13,10,3,(3,10))
