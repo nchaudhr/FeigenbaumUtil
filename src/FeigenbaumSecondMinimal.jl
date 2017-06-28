@@ -387,8 +387,9 @@ cyclic permutation of periodic orbit period 2k+1 for path of length m.
 """
 function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
     perm    = ["" for i=1:period]
-    options = [float(i) for i=1:period]
+    options = [i for i=1:period]
     posits  = getpositions(period, m, setting)
+    repctr = Dict() # keep track of alternations
     k = floor(Int,period/2)
     validperm = true
 
@@ -397,14 +398,14 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         b = getbackwardrules(i, m, nthmin, k)
         # println("Forward: $f, Backward: $b, ($i, $m, $(nthmin), $k)")
 
-        if !setimage(m, posits, f, b, i, perm, options)
+        if !setimage(m, posits, f, b, i, perm, options, repctr)
             validperm = false
             break
         end
         # println(perm)
     end
 
-    js = ["J$(i)" for i=1:length(setting)]
+    js = ["J$(i)" for i=1:length(unique(setting))]
     split = posits["1"][1] #<- left end pt of J_{r_{1}}
     for i = 1:m
         if ((posits["$i"][2] < split) && reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) ||
@@ -415,24 +416,34 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         end
     end
 
-    if isempty(perm[1]) || isempty(perm[end]) && validperm
-        validperm = reduce(&, [fillblanks(perm, options, i, k) for i=1:period if perm[i] == ""])
+    if reduce(|, perm .== "") && validperm
+        validperm = reduce(&, [fillblanks(perm, options, i, split, repctr) for i=1:period if perm[i] == ""])
     end
 
     return validperm, perm
 end
 
-function fillblanks(perm, options, i, k)
-    if (i ≤ k+1)
-        filler = intersect(k+2:length(perm), options)
+function fillblanks(perm, options, i, k, repctr)
+    if (i ≤ k)
+        filler = intersect(k+1:length(perm), options)
     else
-        filler = intersect(1:k+1, options)
+        filler = intersect(1:k, options)
     end
 
     if isempty(filler)
         return false
     elseif length(filler) == 1
         options[convert(Array{Int,1},filler)] = 0
+    else
+        tkey = string(filler)
+        if haskey(repctr, tkey)
+            repctr[tkey] += 1
+            if repctr[tkey] == length(filler)
+                options[filler] = 0
+            end
+        else
+            get!(repctr, tkey, 1)
+        end
     end
 
     perm[i] = string(filler)
@@ -441,57 +452,61 @@ end
 """
 NOTE: setimage mutates its `perm` argument
 """
-function setimage(m, posits, f, b, i, perm, options)
+function setimage(m, posits, f, b, i, perm, options, repctr)
     if (i == m-1)
-        perm[posits["$i"][2]] = getimageoptions(posits, 1, f[end], options, -1)
+        perm[posits["$i"][2]] = getimageoptions(posits, 1, f[end], options, -1, repctr)
         if isempty(perm[posits["$i"][1]])
-            perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1)
+            perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1, repctr)
         end
     elseif (i == m-2)
             if isempty(perm[posits["$i"][2]])
-                perm[posits["$i"][2]] = getimageoptions(posits, f[end], length(options), options, 0)
-                perm[posits["$i"][1]] = getimageoptions(posits, 1, b[end] + 2, options,1)
+                perm[posits["$i"][2]] = getimageoptions(posits, f[end], length(options), options, 0, repctr)
+                if (i == 2)
+                    perm[posits["$i"][1]] = getimageoptions(posits, 1, f[end], options,1, repctr)
+                else
+                    perm[posits["$i"][1]] = getimageoptions(posits, 1, b[end] + 2, options,1, repctr)
+                end
             else
-                perm[posits["$i"][1]] = getimageoptions(posits, f[end], length(options), options, 0)
+                perm[posits["$i"][1]] = getimageoptions(posits, f[end], length(options), options, 0, repctr)
             end
     elseif (i == m)
-        perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1)
+        perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1, repctr)
         if isempty(perm[posits["$i"][2]])
-            perm[posits["$i"][2]] = getimageoptions(posits, f[end], length(options), options, 0)
+            perm[posits["$i"][2]] = getimageoptions(posits, f[end], length(options), options, 0, repctr)
         end
     elseif (mod(m,2) == 0)
         if (mod(i,2) == 0)
-            perm[posits["$i"][1]] = getimageoptions(posits, f[end],f[end]+2, options,1)
+            perm[posits["$i"][1]] = getimageoptions(posits, f[end],f[end]+2, options,1, repctr)
             if isempty(perm[posits["$i"][2]])
                 if (i == 2)
-                    perm[posits["$i"][2]] = getimageoptions(posits, 1, f[end], options,1)
+                    perm[posits["$i"][2]] = getimageoptions(posits, 1, f[end], options,1, repctr)
                 else
-                    perm[posits["$i"][2]] = getimageoptions(posits, 1, b[end]+2, options,1)
+                    perm[posits["$i"][2]] = getimageoptions(posits, 1, b[end]+2, options,1, repctr)
                 end
             end
         else
-            perm[posits["$i"][2]] = getimageoptions(posits, f[end] + 2, f[end], options,1)
+            perm[posits["$i"][2]] = getimageoptions(posits, f[end] + 2, f[end], options,1, repctr)
             if isempty(perm[posits["$i"][1]])
                 if (i == 1)
-                    perm[posits["$i"][1]] = getimageoptions(posits, 1, b[end]+2, options,1)
+                    perm[posits["$i"][1]] = getimageoptions(posits, 1, b[end]+2, options,1, repctr)
                 else
-                    perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1)
+                    perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1, repctr)
                 end
             end
         end
     else
         if (mod(i,2) == 0)
-            perm[posits["$i"][2]] = getimageoptions(posits, f[end] + 2, f[end], options,1)
+            perm[posits["$i"][2]] = getimageoptions(posits, f[end] + 2, f[end], options,1, repctr)
             if isempty(perm[posits["$i"][1]]) && (i != 2)
-                    perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1)
+                    perm[posits["$i"][1]] = getimageoptions(posits, b[end] + 2, 1, options,1, repctr)
             end
         else
-            perm[posits["$i"][1]] = getimageoptions(posits, f[end],f[end]+2, options,1)
+            perm[posits["$i"][1]] = getimageoptions(posits, f[end],f[end]+2, options,1, repctr)
             if isempty(perm[posits["$i"][2]])
                 if (i == 1)
-                    perm[posits["$i"][2]] = getimageoptions(posits, b[end]+2, 1, options,1)
+                    perm[posits["$i"][2]] = getimageoptions(posits, b[end]+2, 1, options,1, repctr)
                 else
-                    perm[posits["$i"][2]] = getimageoptions(posits, 1, b[end]+2, options,1)
+                    perm[posits["$i"][2]] = getimageoptions(posits, 1, b[end]+2, options,1, repctr)
                 end
             end
         end
@@ -503,7 +518,7 @@ function setimage(m, posits, f, b, i, perm, options)
     return true
 end
 
-function getimageoptions(dict, a, b, options, termInt)
+function getimageoptions(dict, a, b, options, termInt, repctr)
     if termInt == -1
         if (a == dict["$b"][1])
             opts = intersect(a, options)
@@ -530,13 +545,23 @@ function getimageoptions(dict, a, b, options, termInt)
         return ""
     elseif length(opts) == 1
         options[convert(Array{Int,1},opts)] = 0
+    else
+        tkey = string(opts)
+        if haskey(repctr, tkey)
+            repctr[tkey] += 1
+            if repctr[tkey] == length(opts)
+                options[opts] = 0
+            end
+        else
+            get!(repctr, tkey, 1)
+        end
     end
 
     return string(opts)
 end
 
 function getforwardrules(interval, m)
-    return interval == m ? [1] : (interval == 1 ? [2] : [interval + 1])
+    return interval == m ? [1] : [interval + 1]
 end
 
 function getbackwardrules(interval, m, n, k)
@@ -555,7 +580,8 @@ end
 
 function getpositions(period, m, setting)
     D = Dict{String,Vector{Int}}()
-    spots = [setting[i+1] + i for i=0:length(setting)-1]
+    tset = sort([setting...])
+    spots = [tset[i+1] + i for i=0:length(setting)-1]
 
     for i = 1:length(setting)
         get!(D, "J$(i)", [spots[i], spots[i]+1])
@@ -570,7 +596,7 @@ function getpositions(period, m, setting)
         get!(D, "$currinterval", [j,j+1])
         currinterval = updatecurrinterval(m, currinterval)
     end
-    for i = spots[end]+1:period
+    for i = spots[end]+1:period-1
         get!(D, "$currinterval", [i,i+1])
         currinterval = updatecurrinterval(m, currinterval)
     end
