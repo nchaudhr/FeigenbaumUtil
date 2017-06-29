@@ -25,10 +25,10 @@ script:
     - if [[ `uname` = "Linux" ]]; then $TESTCMD -e 'map(Pkg.add, ["Plots", "Images", "ImageView", "StatsBase"])'; fi
     - if [[ `uname` = "Linux" ]]; then $TESTCMD -e 'include(joinpath("src", "GraphicsExamples.jl")); plotbifurcationdiagram("Log", 0.4, 0.8, 10)'; fi
 after_success:
-    - julia -e 'Pkg.add("Documenter")'
-    - $TESTCMD 'cd(Pkg.dir("FeigenbaumUtil")); include(joinpath("docs", "make.jl"))'
+    - if [[ `uname` = "Linux" ]]; then julia -e 'Pkg.add("Documenter")'; fi
+    - if [[ `uname` = "Linux" ]]; then $TESTCMD 'cd(Pkg.dir("FeigenbaumUtil")); include(joinpath("docs", "make.jl"))'; fi
     # push coverage results to Coveralls
-    - julia -e 'cd(Pkg.dir("FeigenbaumUtil")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
+    - if [[ `uname` = "Linux" ]]; then julia -e 'cd(Pkg.dir("FeigenbaumUtil")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'; fi
     # push coverage results to Codecov
-    - julia -e 'cd(Pkg.dir("FeigenbaumUtil")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+    - if [[ `uname` = "Linux" ]]; then julia -e 'cd(Pkg.dir("FeigenbaumUtil")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'; fi
 sudo: required
