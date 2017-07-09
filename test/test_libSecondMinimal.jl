@@ -50,6 +50,24 @@ function checksettingforvalidityTest()
     return t == true && p == checksettingforvalidityTestExpected
 end
 
+gencycexpect = [
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 13, 12, 11, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 13, 12, 11, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 3, 2, 1, 4],
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 4, 2, 1, 3],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 3, 2, 1, 4],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 4, 2, 1, 3]];
+function GeneralCycPermTest()
+    gencyc = GeneralCycPerm(checksettingforvalidityTestExpected)
+    return gencyc == GeneralCycPerm(checksettingforvalidityTestExpected, gencycexpect)
+end
+
 @testset "SecondMinimal" begin
     @test checkperminvolutionTest()
     @test getadjacencylistTest()
@@ -58,4 +76,5 @@ end
     @test getsecminpermsTest()
     @test unpacksecminpermTest()
     @test checksettingforvalidityTest()
+    @test GeneralCycPermTest()
 end

@@ -38,14 +38,18 @@ export
     getsecminperms,
     generatePermRelations,
     gettopologicalstructure,
-    checksettingforvalidity
+    checksettingforvalidity,
     # End SecondMinimal -------------------
+    # GeneralCycPerm
+    GeneralCycPerm
+    # End GeneralCycPerm -----------------
 #-------------------------------------------------------------------------------
 
 #------ Dependencies / Extensions ----------------------------------------------
 include(joinpath(dirname(@__FILE__),"FeigenbaumCore.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumParams.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumSecondMinimal.jl"))
+include(joinpath(dirname(@__FILE__),"GeneralCycPerm.jl"))
 #-------------------------------------------------------------------------------
 
 end # module libUtil
