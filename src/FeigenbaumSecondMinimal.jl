@@ -407,12 +407,14 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
 
     js = ["J$(i)" for i=1:length(unique(setting))]
     split = posits["1"][1] #<- left end pt of J_{r_{1}}
+    swap = Vector{Int}()
     for i = 1:m
-        if ((posits["$i"][2] < split) && reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) ||
+        if ((posits["$i"][2] <= split) && reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) ||
              ((posits["$i"][1] > split) && reduce(|, map(x->posits["$i"][1] == posits[x][2], js)))
 
-            perm[posits["$i"][1]] = string("<", perm[posits["$i"][1]])
-            perm[posits["$i"][2]] = string(perm[posits["$i"][2]],">")
+            # perm[posits["$i"][1]] = string("<", perm[posits["$i"][1]])
+            # perm[posits["$i"][2]] = string(perm[posits["$i"][2]],">")
+            push!(swap, posits["$i"][1])
         end
     end
 
@@ -420,7 +422,26 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         validperm = reduce(&, [fillblanks(perm, options, i, split, repctr) for i=1:period if perm[i] == ""])
     end
 
-    return validperm, perm
+    # convert from string to int vectors, change checksettingforvalidity
+    # to do this?
+    gencyc = Vector{Vector{Int}}()
+    for i=1:period
+        if perm[i] == ""
+            push!(gencyc,[])
+        else
+            push!(gencyc, eval(parse(perm[i])))
+        end
+    end
+
+    single = [i for i in setdiff(1:period, swap) if length(gencyc[i]) == 1]
+    multi = setdiff(1:period, single)
+    for i in multi, j in single
+        if gencyc[j][1] ∈ gencyc[i]
+            gencyc[i] = setdiff(gencyc[i], gencyc[j])
+        end
+    end
+
+    return validperm, gencyc, sort(swap)
 end
 
 function fillblanks(perm, options, i, k, repctr)
