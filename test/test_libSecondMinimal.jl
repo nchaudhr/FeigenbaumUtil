@@ -40,32 +40,33 @@ function unpacksecminpermTest()
     return unpacksecminperm(p) == [4,5,7,6,3,2,1]
 end #function unpacksecminpermTest
 
-if VERSION < v"0.6-"
-    const checksettingforvalidityTestExpected = String["[7]", "<[11,12]", "[13]>", "[11,12]","[10]", "[9]", "[8]", "[6]", "[5]", "[3,4]", "[2]", "<[3,4,7]", "[1]>"]
-else
-    const checksettingforvalidityTestExpected = String["[7]", "<[11, 12]", "[13]>", "[11, 12]","[10]", "[9]", "[8]", "[6]", "[5]", "[3, 4]", "[2]", "<[3, 4, 7]", "[1]>"]
-end
+const checksettingforvalidityTestExpected = [[7],[11, 12],[13],[11, 12],[10],[9],[8],[6],[5],[3, 4],[2],[3, 4],[1]]
 function checksettingforvalidityTest()
-    t,p = checksettingforvalidity(13,10,3,(3,10))
-    return t == true && p == checksettingforvalidityTestExpected
+    t,p,s = checksettingforvalidity(13,10,3,(3,10))
+    return t == true && p == checksettingforvalidityTestExpected && s == [2,12]
 end
 
 gencycexpect = [
- [7, 11, 13, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
- [7, 11, 13, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
  [7, 12, 13, 11, 10, 9, 8, 6, 5, 3, 2, 4, 1],
  [7, 12, 13, 11, 10, 9, 8, 6, 5, 4, 2, 3, 1],
- [7, 13, 11, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
- [7, 13, 11, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 11, 13, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
  [7, 13, 12, 11, 10, 9, 8, 6, 5, 3, 2, 4, 1],
  [7, 13, 12, 11, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 3, 2, 4, 1],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 4, 2, 3, 1],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 3, 2, 1, 4],
+ [7, 12, 13, 11, 10, 9, 8, 6, 5, 4, 2, 1, 3],
  [7, 11, 13, 12, 10, 9, 8, 6, 5, 3, 2, 1, 4],
  [7, 11, 13, 12, 10, 9, 8, 6, 5, 4, 2, 1, 3],
- [7, 12, 13, 11, 10, 9, 8, 6, 5, 3, 2, 1, 4],
- [7, 12, 13, 11, 10, 9, 8, 6, 5, 4, 2, 1, 3]];
+ [7, 13, 12, 11, 10, 9, 8, 6, 5, 3, 2, 1, 4],
+ [7, 13, 12, 11, 10, 9, 8, 6, 5, 4, 2, 1, 3],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 3, 2, 1, 4],
+ [7, 13, 11, 12, 10, 9, 8, 6, 5, 4, 2, 1, 3]];
 function GeneralCycPermTest()
-    gencyc = GeneralCycPerm(checksettingforvalidityTestExpected)
-    return gencyc == GeneralCycPerm(checksettingforvalidityTestExpected, gencycexpect)
+    t,p,s = checksettingforvalidity(13,10,3,(3,10))
+    gencyc = GeneralCycPerm(p,s)
+    return gencyc == GeneralCycPerm(p, s, gencycexpect)
 end
 
 @testset "SecondMinimal" begin

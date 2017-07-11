@@ -39,13 +39,9 @@ function generatepermsfromgeneral!(gencyc::Vector{Vector{Int}}, swap::Vector{Int
     period = length(gencyc)
     perms = Vector{Vector{Int}}()
 
-    single = [i for i in setdiff(1:period, swap) if length(gencyc[i]) == 1]
-    multi = setdiff(1:period, single)
-    for i in multi, j in single
-        if gencyc[j] ∈ gencyc[i]
-            gencyc[i] = setdiff(gencyc[i], gencyc[j])
-        end
-    end
+    allswap = sort(union(swap, swap .+ 1))
+    single = [i for i in setdiff(1:period, allswap) if length(gencyc[i]) == 1]
+    multi = setdiff(setdiff(1:period, allswap), single)
 
     # Create blank with only single values
     # --- maybe make this a function
@@ -57,22 +53,18 @@ function generatepermsfromgeneral!(gencyc::Vector{Vector{Int}}, swap::Vector{Int
 
     # copy single and fill in multivalued
     for i in multi
-        # do some things here
         perms = fillmulti(perms, gencyc[i], i)
     end
 
     # At this point we have all perms generated without swaps
-    swapperms = Vector{Vector{Int}}()
     for i in swap
-        for perm in perms
-            p = copy(perm)
-            t = p[i+1]
-            p[i+1] = p[i]
-            p[i] = t
-            push!(swapperms, p)
-        end
+        normal1 = fillmulti(perms, gencyc[i], i)
+        normal2 = fillmulti(normal1, gencyc[i+1], i+1)
+        swap1 = fillmulti(perms, gencyc[i+1], i)
+        swap2 = fillmulti(swap1, gencyc[i], i+1)
+        perms = union(normal2, swap2)
     end
-    perms = union(perms, swapperms)
+
 
     return GeneralCycPerm(gencyc, swap, perms)
 end
@@ -89,4 +81,8 @@ function fillmulti(permvec::Vector{Vector{Int}}, options::Vector{Int}, i::Int)
     end
 
     return perms
+end
+
+function mappermtosymbol(perm::Vector{Int}, sett, k)
+
 end
