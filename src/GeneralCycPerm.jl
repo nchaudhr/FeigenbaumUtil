@@ -82,7 +82,3 @@ function fillmulti(permvec::Vector{Vector{Int}}, options::Vector{Int}, i::Int)
 
     return perms
 end
-
-function mappermtosymbol(perm::Vector{Int}, sett, k)
-
-end

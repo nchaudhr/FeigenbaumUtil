@@ -59,8 +59,8 @@ true
 ```
 """
 function hasclosedcycle(perm, cycle)
-    if (sum(perm .== 1:length(perm)) > 0)
-        return true
+    if reduce(|,perm .== 1:length(perm))
+        return true, find(x->x==true, perm .== 1:length(perm))[1]
     end
 
     for i = 1:length(perm)
@@ -69,10 +69,10 @@ function hasclosedcycle(perm, cycle)
            p = perm[p]
         end
         if (p == i)
-           return true
+           return true, p
         end
     end
-    return false
+    return false, -1
 end
 
 """
