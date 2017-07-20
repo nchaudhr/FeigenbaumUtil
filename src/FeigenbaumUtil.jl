@@ -18,6 +18,7 @@ export
     findBoundsUnivX,
     hasperiodn,
     hasclosedcycle,
+    getsubcycle,
     maketranspositionsfromperm,
     makepermfromtranspositions,
     # End Core ----------------------------

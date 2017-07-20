@@ -76,6 +76,21 @@ function hasclosedcycle(perm, cycle)
 end
 
 """
+    getsubcycle(perm,start,period)
+
+Return a subcycle of length period from permutation perm starting at start
+"""
+function getsubcycle(perm,start,period)
+    cyc = Vector{eltype(perm)}(period)
+    cyc[1] = start
+    for i = 2:period
+        cyc[i] = perm[cyc[i-1]]
+    end
+
+    return cyc
+end
+
+"""
     iterateF(f,ites,lam,x)
 
 Produce a list of ``[f(x0, lam), f(f(x0, lam), lam), ...]`` with up to `ites` compositions.

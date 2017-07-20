@@ -405,16 +405,32 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         # println(perm)
     end
 
-    js = ["J$(i)" for i=1:length(unique(setting))]
+    js = Vector{String}()
+    push!(js, "J1")
+    j = 1
+    for i=2:length(setting)
+        if setting[i] != setting[j]
+            push!(js,"J$i")
+        end
+        j = i
+    end
     split = posits["1"][1] #<- left end pt of J_{r_{1}}
     swap = Vector{Int}()
-    for i = 1:m
-        if ((posits["$i"][2] <= split) && reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) ||
-             ((posits["$i"][1] > split) && reduce(|, map(x->posits["$i"][1] == posits[x][2], js)))
+    # for i = 1:m
+    #     if ((posits["$i"][2] <= split) && reduce(|, map(x->posits["$i"][2] == posits[x][1], js))) ||
+    #          ((posits["$i"][1] > split) && reduce(|, map(x->posits["$i"][1] == posits[x][2], js)))
+    #
+    #         # perm[posits["$i"][1]] = string("<", perm[posits["$i"][1]])
+    #         # perm[posits["$i"][2]] = string(perm[posits["$i"][2]],">")
+    #         push!(swap, posits["$i"][1])
+    #     end
+    # end
 
-            # perm[posits["$i"][1]] = string("<", perm[posits["$i"][1]])
-            # perm[posits["$i"][2]] = string(perm[posits["$i"][2]],">")
-            push!(swap, posits["$i"][1])
+    for i in js
+        if 1 < posits[i][1] <= split
+            push!(swap, posits[i][1]-1)
+        elseif split < posits[i][1] < period - 1
+            push!(swap, posits[i][2])
         end
     end
 
@@ -422,8 +438,7 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         validperm = reduce(&, [fillblanks(perm, options, i, split, repctr) for i=1:period if perm[i] == ""])
     end
 
-    # convert from string to int vectors, change checksettingforvalidity
-    # to do this?
+    # convert from string to int vectors
     gencyc = Vector{Vector{Int}}()
     for i=1:period
         if perm[i] == ""
@@ -601,9 +616,9 @@ end
 
 function getpositions(period, m, setting)
     D = Dict{String,Vector{Int}}()
+
     tset = sort([setting...])
     spots = [tset[i+1] + i for i=0:length(setting)-1]
-
     for i = 1:length(setting)
         get!(D, "J$(i)", [spots[i], spots[i]+1])
     end
