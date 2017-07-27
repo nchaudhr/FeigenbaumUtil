@@ -1,73 +1,20 @@
 using FeigenbaumUtil
 
-include(joinpath(dirname(@__FILE__),"MapPermToSymbols_ThirdMin.jl"))
-
-k = 7
+k = 4
 n = 3
 period = 2*k+1
-verbose = true
-goodSet = Vector{Tuple{Tuple,Vector{Vector{Int}}, Vector{Int}}}()
+goodSet = generateThirdMinPerms(k,n,[1,2,3])
+verbose = false
 validperms = Vector{Vector{Int}}()
-
-# One missing interval
-t,p,s = checksettingforvalidity(period, 2*k-1, n, (k-n+2))
-push!(goodSet, ((k-n+2,),p,s))
-
-# Two missing intervals
-wd = 2*k-1
-m  = 2*k-2
-for i = 2:k
-    rng = i==k ? [k+1] : (i==2 ? [2*k-2] : [2*k-i+1,2*k-i] )
-    for j in rng
-        sett = (i,j)
-        t, p, s = checksettingforvalidity(period, m, n, sett)
-        if t
-            # println("Setting $sett : $p")
-            push!(goodSet, (sett, p, s))
-        end
-    end
-end
-
-if n > 2
-    # Three missing intervals
-    wd = 2*k-2
-    m  = 2*k-3
-    for i = 1:k-1
-        rng = i==k-1 ? [k+2,k+1] : (i==1 ? [2*k-2] : [2*k-i,2*k-i-1])
-        for j in rng
-            sett = (i, k-1, j)
-            t, p, s = checksettingforvalidity(period, m, n, sett)
-            if t
-                # println("Setting $sett : $p")
-                push!(goodSet, (sett, p, s))
-            end
-        end
-    end
-
-    # # Four missing intervals
-    # wd = 2*k-3
-    # m  = 2*k-4
-    # ctr = 0
-    # for i = 1:wd, j = i:wd, q = j:wd, l = q:wd
-    #     sett = (i,j,q,l)
-    #     t, p, s = checksettingforvalidity(period, m, n, sett)
-    #     if t
-    #         # println("Setting $sett : $p")
-    #         push!(goodSet, (sett, p, s))
-    #         ctr += 1
-    #     end
-    # end
-    # # println("Four missing cases with: $ctr")
-end
-
 topstructs = Dict{String, Int}()
 foundinsett = Vector{Tuple}()
 for gdset in goodSet
     println("-----------------------------------------------------------------")
     if verbose
-        println("$(mapsetttosymbol(gdset[1],k)):")
+        println("$(mapsetttosymbol(gdset[1],k)): $(gdset[2]), $(gdset[3])")
         # println("$(gdset[1]): $(gdset[2]), $(gdset[3])")
     else
+        # println("$(gdset[1]):")
         println("$(gdset[1]): $(gdset[2]), $(gdset[3])")
         # print(gdset[1])#print("'")#
     end

@@ -42,8 +42,19 @@ export
     checksettingforvalidity,
     # End SecondMinimal -------------------
     # GeneralCycPerm
-    GeneralCycPerm
+    GeneralCycPerm,
     # End GeneralCycPerm -----------------
+    # ThirdMinimalTools
+    generateThirdMinPerms,
+    mapsetttosymbol,
+    formattex!,
+    makedigraphnodename,
+    mappermtosymbol,
+    symDict,
+    gettoprow,
+    createdictfromrange,
+    getvalidpermsfromgencyc
+    # End ThirdMinimalTools
 #-------------------------------------------------------------------------------
 
 #------ Dependencies / Extensions ----------------------------------------------
@@ -51,6 +62,7 @@ include(joinpath(dirname(@__FILE__),"FeigenbaumCore.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumParams.jl"))
 include(joinpath(dirname(@__FILE__),"FeigenbaumSecondMinimal.jl"))
 include(joinpath(dirname(@__FILE__),"GeneralCycPerm.jl"))
+include(joinpath(dirname(@__FILE__),"ThirdMinimalTools.jl"))
 #-------------------------------------------------------------------------------
 
 end # module libUtil

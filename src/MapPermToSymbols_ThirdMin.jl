@@ -22,6 +22,9 @@ function formattex!(ln::String)
            ,"cdots", "\\cdots")
 end
 
+function makedigraphnodename(ln::String)
+    return string("j",replace(replace(ln,"+",""),"-","m"))
+end
 
 function mappermtosymbol(perm::Vector{Int}, k::Int, sett)
     fn = eval(parse("mappermtosym$(length(sett))"))
@@ -38,8 +41,17 @@ function symDict(perm::Vector{Int}, k::Int, sett)
     return mapsto
 end
 
+function gettoprow(sett,k)
+    fn = eval(parse("gettoprow$(length(sett))"))
+    return fn(sett,k)
+end
+
+function gettoprow1(sett,k)
+    return [1,0,k-2,k-1,k,k+1,k+2,k+3,0]
+end
+
 function mappermtosym1(perm::Vector{Int}, k::Int, sett)
-    spots = [1,0,k-2,k-1,k,k+1,k+2,k+3,0]
+    spots = gettoprow1(sett,k)
     spotDict = symDict1(k::Int, sett)
 
     mapsto = Vector{String}()
@@ -60,9 +72,7 @@ function symDict1(k::Int, sett)
                                 (k+5,"k+5"),(2*k+1,"2k+1")])
 end
 
-function mappermtosym2(perm::Vector{Int}, k::Int, sett)
-    sett[1] == 1 && return [""]
-
+function gettoprow2(sett,k)
     if sett[1] == 2
         spots = [1,2,3,4,0,2*k-1,2*k,2*k+1]
     elseif sett[1] == k-1
@@ -82,6 +92,14 @@ function mappermtosym2(perm::Vector{Int}, k::Int, sett)
             spots = [0,i-1,i,i+1,i+2,0,j+1,j+2,j+3,j+4,0]
         end
     end
+
+    return spots
+end
+
+function mappermtosym2(perm::Vector{Int}, k::Int, sett)
+    sett[1] == 1 && return [""]
+
+    spots = gettoprow2(sett,k)
     spotDict = symDict2(k,sett)
 
     mapsto = Vector{String}()
@@ -146,7 +164,7 @@ function symDict2(k::Int, sett)
     return spotDict
 end
 
-function mappermtosym3(perm::Vector{Int}, k::Int, sett)
+function gettoprow3(sett,k)
     if sett[1] == 1
         spots = [1,2,3,0,k-1,k,k+1,k+2,0,2*k,2*k+1]
     elseif sett[1] == 2
@@ -172,6 +190,12 @@ function mappermtosym3(perm::Vector{Int}, k::Int, sett)
             spots = [1,0,i-1,i,i+1,i+2,0,k-1,k,k+1,k+2,0,j+1,j+2,j+3,0]
         end
     end
+
+    return spots
+end
+
+function mappermtosym3(perm::Vector{Int}, k::Int, sett)
+    spots = gettoprow3(sett,k)
     spotDict = symDict3(k,sett)
 
     mapsto = Vector{String}()
