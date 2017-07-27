@@ -5,3 +5,6 @@
 *.tex
 *.mat
 *.dat
+*.aux
+*.log
+*.synctex.gz
