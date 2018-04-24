@@ -9,10 +9,10 @@ julia> f,fc,maxloc= selectmap("Log");
 julia> findparams(f, maxloc, 7, 0.78, 1.0, 10.0^-10.0,1000)
 ```
 """
-function findparams{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int, limit::Int = Inf32)
+function findparams(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int, limit::Int = Inf32) where {T1<:Real, T2<:Real}
   lams = zeros(T1,0)
-  ctr::Int = 0
-  multFlag::Bool = false
+  ctr = 0
+  multFlag = false
 
   lam = findparaminterval(fun,maxloc,k,p0,pEnd,epsi, numTrial)
   while (lam != Inf)
@@ -41,7 +41,7 @@ function findparams{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int, p0::T
   lams
 end # function findparams
 
-function findparaminterval{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int)
+function findparaminterval(fun::Function, maxloc::T1, k::Int, p0::T1, pEnd::T1, epsi::T2, numTrial::Int) where {T1<:Real, T2<:Real}
   if (abs(p0-pEnd) < epsi)
     # println("Exited from terminal recursive chain")
     return p0
@@ -49,7 +49,7 @@ function findparaminterval{T1<:Real, T2<:Real}(fun::Function, maxloc::T1, k::Int
     vals = zeros(T1, numTrial)
     vals[1] = nestF(fun, k, p0, maxloc)
     sig = sign(vals[1]-maxloc)
-    rng = linspace(p0, pEnd, numTrial)
+    rng = range(p0, stop=pEnd, length=numTrial)
     for i in 2:numTrial
       vals[i] = nestF(fun, k, rng[i], maxloc)
       if (sig*sign(vals[i]-maxloc) < 0)
@@ -73,8 +73,8 @@ function writeparam2tex(fn, goBeyond3::Bool = true, outFile="ParamTables.tex", p
     throw("Expecting One of Log, Sin, Cub, or Qua!")
   end
 
-  const opnFile = joinpath(dirname(@__FILE__),"..","data",string(fn),paramFile)
-  const savFile = joinpath(dirname(@__FILE__),"..","data",string(fn),outFile)
+  opnFile = joinpath(dirname(@__FILE__),"..","data",string(fn),paramFile)
+  savFile = joinpath(dirname(@__FILE__),"..","data",string(fn),outFile)
 
   params = readdlm(opnFile)
   upper = (goBeyond3 ? size(params,1) : find(x->x==3.0, params[:,2])[1])

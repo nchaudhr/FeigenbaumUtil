@@ -1,3 +1,7 @@
+@static if VERSION < v"0.7-"
+    Base.range(start::T; stop::Real=1.0, length::Int = 100) where {T<:Real} = linspace(start, stop, length)
+end
+
 """
     selectmap(func)
 
@@ -24,7 +28,7 @@ function selectmap(func)
      maxloc = 1.0 / sqrt(3.0)
     elseif func == "Qua"
       f=(x,l)->(l*(1-(2*x-1)^4))#qua
-      fc=(x,l)->(-l.*(x.^4.*1.6e1-1.0)-1.0./2.0)
+      fc=(x,l)->(-l .* (x .^4 .* 1.6e1 - 1.0) - 1.0./2.0)
     else
       error("Must specify one of Log, Sin, Cub, or Qua for use")
     end
@@ -60,12 +64,12 @@ true
 """
 function hasclosedcycle(perm, cycle)
     if reduce(|,perm .== 1:length(perm))
-        return true, find(x->x==true, perm .== 1:length(perm))[1]
+        return true, findfirst(x->x==true, perm .== 1:length(perm))
     end
 
-    for i = 1:length(perm)
+    for i in 1:length(perm)
         p = i
-        for j = 1:cycle
+        for j in 1:cycle
            p = perm[p]
         end
         if (p == i)
@@ -83,7 +87,7 @@ Return a subcycle of length period from permutation perm starting at start
 function getsubcycle(perm,start,period)
     cyc = Vector{eltype(perm)}(period)
     cyc[1] = start
-    for i = 2:period
+    for i in 2:period
         cyc[i] = perm[cyc[i-1]]
     end
 
@@ -95,7 +99,7 @@ end
 
 Produce a list of ``[f(x0, lam), f(f(x0, lam), lam), ...]`` with up to `ites` compositions.
 """
-function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5)
+function iterateF(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5) where {T1<:Real,T2<:Real}
     lst = Array{promote_type(T1,T2)}(ites)
     lst[1] = f(x, lam)
     for n in 2:ites
@@ -110,7 +114,7 @@ end # function iterateF
 
 Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``, in place
 """
-function iterateF!{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
+function iterateF!(f::Function, ites::Int, lam::T1, x::AbstractArray{T2}) where {T1<:Real,T2<:Real}
   # look to making this recursive
     lams = ones(T1, length(x), 1)*lam
 
@@ -126,7 +130,7 @@ end # function iterateF!
 
 Return list ``f^{ites}(x; lam)`` where ``x = [x_1 x_2 ... x_n]``
 """
-function iterateF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1, x::AbstractArray{T2})
+function iterateF(f::Function, ites::Int, lam::T1, x::AbstractArray{T2}) where {T1<:Real,T2<:Real}
   # look to making this recursive
     lams = ones(T1, length(x), 1)*lam
     y=x
@@ -142,7 +146,7 @@ end # function iterateF
 
 Return ``f^{ites}(x; lam)``
 """
-function nestF{T1<:Real,T2<:Real}(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5)
+function nestF(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5) where {T1<:Real,T2<:Real}
     y = x
     for n in 1:ites
         y = f(y, lam)
@@ -186,7 +190,7 @@ julia> getCyclicPermFromLambda(f,3, 0.9579685138208287, maxloc)
  1
 ```
 """
-function getCyclicPermFromLambda{T1<:Real,T2<:Real}(f::Function, period::Int, lam::T1 = 0.5, x0::T2 = 0.5)
+function getCyclicPermFromLambda(f::Function, period::Int, lam::T1 = 0.5, x0::T2 = 0.5) where {T1<:Real,T2<:Real}
     # Any difference between this and sortperm(iterateF(...))? Result is the same for 3 orbit, but that is a special case.
     # Yes, sortperm(iterateF(...)) produces [2,5,3,4,1] for 5 orbit, expected is [3,5,4,2,1]
     # Although this could probably done more efficiently
@@ -233,7 +237,7 @@ end
 
 # GetFundamentalCycles.m
 function findfuncycle(start, int, perm)
-    (m, N) = size(perm)
+    m, N = size(perm)
     lst = Array{typeof(int)}(N + 1)
     lst[1] = int
 
@@ -258,7 +262,7 @@ function findfuncycle(start, int, perm)
 end # function findfuncycle
 
 function getFundamentalCycles(perm)
-    (m, N) = size(perm)
+    m, N = size(perm)
     cycles = Array{Int}(2*(N-1), N+1)
     for i in 1:(N - 1)
         cycles[2i-1,:] = findfuncycle(i, i, perm)
@@ -316,7 +320,7 @@ Returns distance between superstable fixed point, maxloc, and the closest elemen
 of periodic orbit of function fun with period ``(2^{ites})*k`` at parameter
 ``lam``
 """
-function findDistanceReg{T1<:Real,T2<:Real}(fun::Function, maxloc::T2, lam::T1, ites::Int, k::Int)
+function findDistanceReg(fun::Function, maxloc::T2, lam::T1, ites::Int, k::Int) where {T1<:Real,T2<:Real}
   nestF(fun, ites, k, lam, maxloc)[end] - maxloc
 end # function findDistanceReg
 
@@ -327,14 +331,14 @@ Calculate the bottom left and right x coords of a bounding box containing
 a stable 2-cycle and the portions of `f` that generate it thereby demonstrating
 the period doubling mechanism for f
 """
-function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lam::T1, k::Int, ites=0)
-  pnts::Int = 1000
-  hpts::Int = pnts / 2
-  x = linspace(0, 1, pnts)
+function findBoundsUnivX(f::Function, maxloc::T2, lam::T1, k::Int, ites=0) where {T1<:Real,T2<:Real}
+  pnts = 1000
+  hpts = ceil(Int, pnts / 2)
+  x = range(0, stop=1, length=pnts)
 
   y = iterateF(f, k, lam, x)
   d = findDistanceReg(f, maxloc, lam, ites, k)
-  por::Int = round(abs(d)*pnts)
+  por = round(Int, abs(d)*pnts)
 
   if (d < 0)
     xrng = (hpts + 1 - por):hpts
@@ -355,7 +359,7 @@ function findBoundsUnivX{T1<:Real,T2<:Real}(f::Function, maxloc::T2, lam::T1, k:
 
   xrng = (hpts + 1 - por):(hpts + 1 + por)
   wdt = x[xrng]
-  hgt = (d < 0) ? linspace(inf1, sup1+d1, length(x)) : linspace(inf1 - d1, sup1, length(x))
+  hgt = (d < 0) ? range(inf1, stop=sup1+d1, length=length(x)) : range(inf1 - d1, stop=sup1, length=length(x))
   xmin = -(maxloc - minimum(wdt))
   xmax = maximum(wdt) - maxloc
 
@@ -408,6 +412,6 @@ julia> maketranspositionsfromperm([5,3,2,4,1,6,7])
 ```
 """
 function maketranspositionsfromperm(perm)
-    trans  = [(m,perm[m]) for m = 1:length(perm) if perm[m] ≠ m]
-    return [trans[i] for i=1:length(trans) if trans[i][1] < trans[i][2] && (trans[i][2],trans[i][1]) ∈ trans]
+    trans  = [(m,perm[m]) for m in 1:length(perm) if perm[m] ≠ m]
+    return [trans[i] for i in 1:length(trans) if trans[i][1] < trans[i][2] && (trans[i][2],trans[i][1]) ∈ trans]
 end # function maketranspositionsfromperm
