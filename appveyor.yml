@@ -4,10 +4,11 @@ environment:
     - JULIA_URL: "https://julialang-s3.julialang.org/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
     - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/julia-latest-win32.exe"
     - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
+
 matrix:
   allow_failures:
     - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x86/julia-latest-win32.exe"
-- JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
+    - JULIA_URL: "https://julialangnightlies-s3.julialang.org/bin/winnt/x64/julia-latest-win64.exe"
 
 branches:
   only:
@@ -27,8 +28,7 @@ install:
 build_script:
 # Need to convert from shallow to complete for Pkg.clone to work
   - IF EXIST .git\shallow (git fetch --unshallow)
-  - C:\projects\julia\bin\julia -e "versioninfo();
-      Pkg.clone(pwd(), \"FeigenbaumUtil\"); Pkg.build(\"FeigenbaumUtil\")"
+  - C:\projects\julia\bin\julia -e "versioninfo();Pkg.clone(pwd(), \"FeigenbaumUtil\"); Pkg.build(\"FeigenbaumUtil\")"
 
 test_script:
 - C:\projects\julia\bin\julia --check-bounds=yes -e "Pkg.test(\"FeigenbaumUtil\")"
