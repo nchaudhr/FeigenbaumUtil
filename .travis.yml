@@ -6,24 +6,22 @@ os:
 julia:
   - 0.5
   - 0.6
-  #- nightly
+  - nightly
+
+matrix:
+  allow_failures:
+    - julia: 0.5
+
 notifications:
   email: false
-addons:
-    apt:
-        packages:
-            - xvfb
-            - xauth
-            - libgtk-3-0
+
 # uncomment the following lines to override the default test script
 script:
-    - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-    - if [ $TRAVIS_OS_NAME = "linux" ]; then TESTCMD="xvfb-run julia"; else TESTCMD="julia"; fi
-    - $TESTCMD -e 'Pkg.clone(pwd());
+    - julia -e 'Pkg.clone(pwd());
           Pkg.build("FeigenbaumUtil");
           Pkg.test("FeigenbaumUtil"; coverage=true)'
-    - if [ $TRAVIS_OS_NAME = "linux" ]; then $TESTCMD -e 'map(Pkg.add, ["Plots", "Images", "ImageView", "StatsBase"])'; fi
-    - if [ $TRAVIS_OS_NAME = "linux" ]; then $TESTCMD -e 'include(joinpath("src", "GraphicsExamples.jl")); plotbifurcationdiagram("Log", 0.4, 0.8, 10)'; fi
+    #- if [ $TRAVIS_OS_NAME = "linux" ]; then $TESTCMD -e 'map(Pkg.add, ["Plots", "Images", "ImageView", "StatsBase"])'; fi
+    #- if [ $TRAVIS_OS_NAME = "linux" ]; then $TESTCMD -e 'include(joinpath("src", "GraphicsExamples.jl")); plotbifurcationdiagram("Log", 0.4, 0.8, 10)'; fi
 after_success:
     - if [ $TRAVIS_OS_NAME = "linux" ]; then julia -e 'Pkg.add("Documenter")'; fi
     - if [ $TRAVIS_OS_NAME = "linux" ]; then $TESTCMD 'cd(Pkg.dir("FeigenbaumUtil")); include(joinpath("docs", "make.jl"))'; fi
