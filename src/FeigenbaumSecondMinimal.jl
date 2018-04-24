@@ -87,7 +87,7 @@ function getrelativeadjmat(adjmat::Array{Int,2},jhat::Int,jtil::Int=-1)
   ident = [i for i = 1:2*k+1]
 end
 
-type SecMinPerm
+mutable struct SecMinPerm
   top::Vector{Int}
   bottom::Vector{Int}
   gapstart::Vector{Int}
