@@ -1,11 +1,3 @@
-
-function checkperminvolutionTest()
-    a = checkperminvolution([4,5,7,6,3,2,1],[3,7,5,6,4,2,1]) == [5,3,2,4,1,6,7]
-    b = checkperminvolution([4,5,7,6,3,2,1],[7,4,6,5,3,1,2]) == []
-
-    return (a && b)
-end # function checkperminvolutionTest
-
 lst = [(1,4),(2,5),(2,6),(3,6),(4,3),(4,4),(4,5),(5,2),(6,1)]
 function getadjacencylistTest()
     return getadjacencylist([4,5,7,6,3,2,1]) == lst
@@ -70,6 +62,11 @@ function GeneralCycPermTest()
 end
 
 @testset "SecondMinimal" begin
+    @testset \"\" begin
+        a = checkperminvolution([4,5,7,6,3,2,1],[3,7,5,6,4,2,1]) == [5,3,2,4,1,6,7]
+        b = checkperminvolution([4,5,7,6,3,2,1],[7,4,6,5,3,1,2]) == []
+        @test (a && b)
+    end
     @test checkperminvolutionTest()
     @test getadjacencylistTest()
     @test getadjacencymatrixTest()
