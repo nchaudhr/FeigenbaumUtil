@@ -22,5 +22,5 @@ end
         include(joinpath(dirname(@__DIR__), "MakeDigraphs", d))
         @test true
     end
-    include("FeigenbaumParam.jl")
+    include("FeigenbaumParams.jl")
 end
