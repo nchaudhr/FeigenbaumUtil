@@ -16,7 +16,7 @@ Check if 2 permutations have a involutory relationship, that is, if Tp1 = p2 and
  p1 = Tp2. Return the involution if so, empty otherwise.
 """
 function checkperminvolution(p1,p2,flag=true)
-  T = [find(p1 .== a)[1] for a in p2]
+  T = [findfirst(p1 .== a) for a in p2]
 
   # If flag is on return empty otherwise
   # return T even if it isn't an involution
@@ -444,7 +444,7 @@ function checksettingforvalidity(period::Int, m::Int, nthmin::Int, setting)
         if perm[i] == ""
             push!(gencyc,[])
         else
-            push!(gencyc, eval(parse(perm[i])))
+            push!(gencyc, eval(Meta.parse(perm[i])))
         end
     end
 

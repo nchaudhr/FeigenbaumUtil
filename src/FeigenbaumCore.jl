@@ -1,5 +1,7 @@
 @static if VERSION < v"0.7-"
     Base.range(start::T; stop::Real=1.0, length::Int = 100) where {T<:Real} = linspace(start, stop, length)
+else
+    import LinearAlgebra: diag
 end
 
 """
@@ -17,18 +19,18 @@ julia> f,fc,maxloc = selectmap("Log")
 function selectmap(func)
     maxloc = 0.5
     if func == "Log"
-      f=(x,l)->(4.0*l*(- x*x + x))
-      fc=(x,l)->(l.*(x-(x+1.0./2.0).^2.0+1.0./2.0).*4.0-1.0./2.0)
+      f=(x,l)->(4*l*(- x*x + x))
+      fc=(x,l)->(l.*(x-(x+1/2).^2+1/2).*4 - (1/2))
     elseif func == "Sin"
       f=(x,l)->(l*sin(pi*x))# sin
-      fc=(x,l)->(l.*sin(pi.*(x+1.0./2.0))-1.0./2.0)
+      fc=(x,l)->(l.*sin(pi*(x+(1/2)))-(1/2))
     elseif func == "Cub"
-     f=(x,l)->(-1.5*sqrt(3.0)*l*(x*x*x - x))#cub
-     fc=(x,l)->(sqrt(3.0).*(-1.0./3.0)+sqrt(3.0).*l.*(x+sqrt(3.0).*(1.0./3.0)-(x+sqrt(3.0).*(1.0./3.0)).^3.0).*(3.0./2.0))
-     maxloc = 1.0 / sqrt(3.0)
+     f=(x,l)->(-1.5*sqrt(3)*l*(x*x*x - x))#cub
+     fc=(x,l)->(sqrt(3)*(-1/3)+sqrt(3)*l.*(x+sqrt(3)*(1/3)-(x+sqrt(3).*(1/3)).^3).*(3/2))
+     maxloc = 1.0 / sqrt(3)
     elseif func == "Qua"
       f=(x,l)->(l*(1-(2*x-1)^4))#qua
-      fc=(x,l)->(-l .* (x .^4 .* 1.6e1 - 1.0) - 1.0./2.0)
+      fc=(x,l)->(-l .* ((x .^4) * 1.6e1 - 1) - 1/2)
     else
       error("Must specify one of Log, Sin, Cub, or Qua for use")
     end
@@ -100,8 +102,7 @@ end
 Produce a list of ``[f(x0, lam), f(f(x0, lam), lam), ...]`` with up to `ites` compositions.
 """
 function iterateF(f::Function, ites::Int, lam::T1 = 0.5, x::T2 = 0.5) where {T1<:Real,T2<:Real}
-    lst = Array{promote_type(T1,T2)}(ites)
-    lst[1] = f(x, lam)
+    lst = ones(promote_type(T1,T2), ites)*f(x, lam)
     for n in 2:ites
         lst[n] = f(lst[n - 1], lam)
     end
@@ -160,18 +161,14 @@ end # function nestF
 
 Return ``f^{2^{ites}*k}(x; lam)`` as a list
 """
-function nestF(f, ites, k, lam, x)
-   iterateF(f, k*(2^ites), lam, x)
-end #function nestF
+nestF(f, ites, k, lam, x) = iterateF(f, k*(2^ites), lam, x)
 
 """
     nestF!(f,ites,k,lam,x)
 
 Return ``f^{(2^ites)*k}(x; lam)`` as a list, in place
 """
-function nestF!(f, ites, k, lam, x)
-   iterateF!(f, k*2^ites, lam, x)
- end #function nestF!
+nestF!(f, ites, k, lam, x) = iterateF!(f, k*2^ites, lam, x)
 
 """
     getCyclicPermFromLambda(f,period,lam,x0)
@@ -195,7 +192,7 @@ function getCyclicPermFromLambda(f::Function, period::Int, lam::T1 = 0.5, x0::T2
     # Yes, sortperm(iterateF(...)) produces [2,5,3,4,1] for 5 orbit, expected is [3,5,4,2,1]
     # Although this could probably done more efficiently
     perm = circshift(iterateF(f, period, lam, x0),1)
-    perm1 = Array{Int}(period)
+    perm1 = zeros(Int, period)
     cyc = sortperm(perm)
 
     for (i, v) in enumerate(cyc)
@@ -220,7 +217,7 @@ returns ``ω(perm(ω))``
 """
 function findinverse(perm::Vector{Int})
     # look to reverse and reverseind
-    indices = collect(length(perm):-1:1)
+    indices = length(perm):-1:1
     return [indices[perm[i]] for i in indices]
 end # function findinverse
 
@@ -238,7 +235,7 @@ end
 # GetFundamentalCycles.m
 function findfuncycle(start, int, perm)
     m, N = size(perm)
-    lst = Array{typeof(int)}(N + 1)
+    lst = zeros(typeof(int), N + 1)
     lst[1] = int
 
     for i in 1:N
@@ -263,7 +260,7 @@ end # function findfuncycle
 
 function getFundamentalCycles(perm)
     m, N = size(perm)
-    cycles = Array{Int}(2*(N-1), N+1)
+    cycles = zeros(Int, 2*(N-1), N+1)
     for i in 1:(N - 1)
         cycles[2i-1,:] = findfuncycle(i, i, perm)
         cycles[2i, :] = findfuncycle(i + 1, i, perm)
@@ -320,9 +317,7 @@ Returns distance between superstable fixed point, maxloc, and the closest elemen
 of periodic orbit of function fun with period ``(2^{ites})*k`` at parameter
 ``lam``
 """
-function findDistanceReg(fun::Function, maxloc::T2, lam::T1, ites::Int, k::Int) where {T1<:Real,T2<:Real}
-  nestF(fun, ites, k, lam, maxloc)[end] - maxloc
-end # function findDistanceReg
+findDistanceReg(fun::Function, maxloc, lam, ites, k) = (nestF(fun, ites, k, lam, maxloc)[end] - maxloc)
 
 """
     findBoundsUnivX(f, maxloc, lambda, k, ites)

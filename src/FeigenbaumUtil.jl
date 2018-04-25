@@ -62,7 +62,8 @@ include("FeigenbaumCore.jl")
 include("FeigenbaumParams.jl")
 include("FeigenbaumSecondMinimal.jl")
 include("GeneralCycPerm.jl")
-include("ThirdMinimalTools.jl")
+include("MapPermToSymbols_ThirdMin.jl")
+include("generateThirdMinPerms.jl")
 #-------------------------------------------------------------------------------
 
 end # module libUtil

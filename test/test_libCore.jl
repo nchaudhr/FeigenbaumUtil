@@ -1,3 +1,7 @@
+@static if VERSION < v"0.7-"
+    Base.range(start::T; stop::Real=1.0, length::Int = 100) where {T<:Real} = linspace(start, stop, length)
+end
+
 # Need to think of a good way to do this. Does the fact we use this
 # function in tests for other functions make a difference to the coverage?
 function iterateFTest()
@@ -27,7 +31,7 @@ end # function getCyclicPermFromLambdaTest
     @test first(hasclosedcycle([4, 2, 3, 1], 4)) == true # Test short-circuiting behavior
     @test first(hasclosedcycle([3, 5, 4, 6, 7, 1, 2], 3)) == true
     @test first(hasclosedcycle([2, 3, 4, 1], 2)) == false
-    x = linspace(0, 1, 10)
+    x = range(0, stop=1, length=10)
     x1 = collect(x)
     iterateF!(logmap, 5, 0.3, x1)
     @test all(x1 .== iterateF(logmap, 5, 0.3, x))
