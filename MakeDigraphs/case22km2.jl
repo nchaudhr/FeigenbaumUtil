@@ -1,4 +1,4 @@
-const digstr = "\\begin{figure}[htb]
+digstr = "\\begin{figure}[htb]
 \\centering
 %\\resizebox{\\textwidth}{!}{
 \\begin{tikzpicture}[
@@ -57,7 +57,7 @@ const digstr = "\\begin{figure}[htb]
 \\label{fig:valid322km2-}
 \\end{figure}"
 
-const permstr = "\\small{
+permstr = "\\small{
 \\begin{equation}
 \\left(\\begin{array}{cccccccccccccccc}
 1 & 2 & 3 & \\cdots & k-1 & k & k+1 & k+2 & \\cdots & 2k-1 & 2k & 2k+1 \\\\
